@@ -40,6 +40,10 @@ public class PlayerLevel implements Listener {
 		Score PlayerID = objective.getScore(GetID);
 		PlayerID.setScore(GetLV);
 		p.setScoreboard(scoreboard);
+		int GetExp = (int)Status.get(2);
+		Score PlayerExp = objective.getScore("Exp: ");
+		PlayerExp.setScore(GetExp);
+
 		
 	}
 
