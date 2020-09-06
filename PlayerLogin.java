@@ -47,13 +47,7 @@ public class PlayerLogin implements CommandExecutor, Listener {
 				}
 			}
 		}
-
 		return true;
-	}
-	@EventHandler
-	public void OnJoin(PlayerJoinEvent e) {
-		Player player = e.getPlayer();
-		//isLogin = false;
 	}
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
