@@ -47,8 +47,19 @@ public class PlayerLevel implements Listener {
 		String Class = (String) GetUserInfo.get(3);
 		Block block = e.getBlock();
 		Material getMat = block.getType();
+
+		boolean hasGive15s = Give15s.stream().anyMatch(s ->  s == getMat);
+		boolean hasGive30s = Give30s.stream().anyMatch(s ->  s == getMat);
+		boolean hasGive50s = Give50s.stream().anyMatch(s ->  s == getMat);
+
 		if(Class.equals("Arc")) {
-			if (getMat.equals(Material.DIAMOND_BLOCK)) {
+			if (hasGive15s) {
+				EXP = EXP + 15;
+			} else if(hasGive30s) {
+				EXP = EXP + 30;
+			} else if(hasGive50s) {
+				EXP = EXP + 50;
+			} else {
 				EXP = EXP + 5;
 			}
 		}
