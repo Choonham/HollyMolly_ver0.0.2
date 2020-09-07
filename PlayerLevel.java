@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -22,7 +23,50 @@ import java.util.Arrays;
 
 public class PlayerLevel implements Listener {
 	Player p;
+	PlayerLogin login = new PlayerLogin();
 	public PlayerLevel() {}
+
+	@EventHandler
+	public void onPlayerKilled(PlayerDeathEvent e) {
+		String getKilled = e.getEntity().getName();
+		String Killer = e.getEntity().getKiller().getName();
+
+		Connect_DB connect = new Connect_DB();
+		ArrayList<Object> GetKillerInfo = new ArrayList<Object>();
+		ArrayList<Object> GetKilledInfo = new ArrayList<Object>();
+
+		//*********************killer info********************//
+		GetKillerInfo = this.GetUserInfo(Killer);
+		int KillerEXP = (int) GetKillerInfo.get(2);
+		int KillerLV = (int) GetKillerInfo.get(1);
+		String KillerClass = (String) GetKillerInfo.get(3);
+
+		//*********************getKilled info********************//
+		GetKilledInfo = this.GetUserInfo(getKilled);
+		int KilledEXP = (int) GetKilledInfo.get(2);
+		int KilledLV = (int) GetKilledInfo.get(1);
+
+		if(KillerClass.equals("predator")){
+			KilledEXP = KillerEXP + KilledEXP;
+		}
+
+		if(KillerEXP >= (KillerLV*(1000)*(KillerLV*0.75))) {
+			KillerLV++;
+			KillerEXP = 0;
+		}
+
+		String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ? WHERE ID = ?";
+		try {
+			PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
+			stmt.setInt(1, KillerEXP);
+			stmt.setInt(2, KillerLV);
+			stmt.setString(3, Killer);
+			stmt.executeUpdate();
+		}catch(Exception E) {
+			E.printStackTrace();
+		}
+		ShowBoard(p);
+	}
 
 	@EventHandler
 	public void onPlayerSetBlock(BlockPlaceEvent e) {
@@ -34,8 +78,9 @@ public class PlayerLevel implements Listener {
 				Material.BROWN_WOOL, Material.CYAN_WOOL, Material.GRAY_WOOL, Material.GREEN_WOOL,
 				Material.LIGHT_BLUE_WOOL, Material.LIGHT_GRAY_WOOL, Material.LIME_WOOL, Material.MAGENTA_WOOL,
 				Material.ORANGE_WOOL, Material.PINK_WOOL, Material.PURPLE_WOOL, Material.RED_WOOL, Material.YELLOW_WOOL};
-		Material[] Give30List = {Material.BRICK, Material.BRICK_SLAB, Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.GLOWSTONE};
+		Material[] Give30List = {Material.BRICKS, Material.BRICK_SLAB, Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.GLOWSTONE};
 		Material[] Give50List = {Material.DIAMOND_BLOCK};
+		
 		ArrayList<Material> Give15s = new ArrayList<Material>(Arrays.asList(Give15List));
 		ArrayList<Material> Give30s = new ArrayList<Material>(Arrays.asList(Give30List));
 		ArrayList<Material> Give50s = new ArrayList<Material>(Arrays.asList(Give50List));
@@ -51,18 +96,17 @@ public class PlayerLevel implements Listener {
 		boolean hasGive15s = Give15s.stream().anyMatch(s ->  s == getMat);
 		boolean hasGive30s = Give30s.stream().anyMatch(s ->  s == getMat);
 		boolean hasGive50s = Give50s.stream().anyMatch(s ->  s == getMat);
-
-		if(Class.equals("Arc")) {
-			if (hasGive15s) {
-				EXP = EXP + 15;
-			} else if(hasGive30s) {
-				EXP = EXP + 30;
-			} else if(hasGive50s) {
-				EXP = EXP + 50;
-			} else {
-				EXP = EXP + 5;
-			}
+		
+		if ((hasGive15s)&&(Class.equals("Arc"))) {
+			EXP = EXP + 15;
+		} else if((hasGive30s)&&(Class.equals("Arc"))) {
+			EXP = EXP + 30;
+		} else if((hasGive50s)&&(Class.equals("Arc"))) {
+			EXP = EXP + 50;
+		} else {
+			EXP = EXP + 5;
 		}
+		
 		if(EXP >= (LV*(1000)*(LV*0.75))) {
 			LV++;
 			EXP = 0;
@@ -94,19 +138,19 @@ public class PlayerLevel implements Listener {
 		EXP = (int) GetUserInfo.get(2);
 		LV = (int) GetUserInfo.get(1);
 		String Class = (String) GetUserInfo.get(3);
-		if(Class.equalsIgnoreCase("hunter")) {
-		if(entity.getType()==EntityType.ZOMBIE){
+	
+		if((entity.getType()==EntityType.ZOMBIE)&&(Class.equals("hunter"))){
 			EXP = EXP + 50;
-		} else if(entity.getType()==EntityType.SKELETON){
+		} else if((entity.getType()==EntityType.SKELETON)&&(Class.equals("hunter"))){
 			EXP = EXP + 70;
-		} else if(entity.getType()==EntityType.ENDERMAN){
+		} else if((entity.getType()==EntityType.ENDERMAN)&&(Class.equals("hunter"))){
 			EXP = EXP + 150;
-		} else if(entity.getType()==EntityType.CREEPER){
+		} else if((entity.getType()==EntityType.CREEPER)&&(Class.equals("hunter"))){
 			EXP = EXP + 100;
 		} else {
 			EXP = EXP + 30;
 			}
-		}
+		
 		if(EXP >= (LV*(1000)*(LV*0.75))) {
 			LV++;
 			EXP = 0;
