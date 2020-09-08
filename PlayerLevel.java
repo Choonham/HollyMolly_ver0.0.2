@@ -28,44 +28,50 @@ public class PlayerLevel implements Listener {
 
 	@EventHandler
 	public void onPlayerKilled(PlayerDeathEvent e) {
-		String getKilled = e.getEntity().getName();
-		String Killer = e.getEntity().getKiller().getName();
+		if(e.getEntity() instanceof Player) {
+			Player getKilled = e.getEntity();
+			String getKilledName = getKilled.getName();
+			Player Killer = e.getEntity().getKiller();
+			String KillerName = Killer.getName();
 
-		Connect_DB connect = new Connect_DB();
-		ArrayList<Object> GetKillerInfo = new ArrayList<Object>();
-		ArrayList<Object> GetKilledInfo = new ArrayList<Object>();
+			Connect_DB connect = new Connect_DB();
+			ArrayList<Object> GetKillerInfo = new ArrayList<Object>();
+			ArrayList<Object> GetKilledInfo = new ArrayList<Object>();
 
-		//*********************killer info********************//
-		GetKillerInfo = this.GetUserInfo(Killer);
-		int KillerEXP = (int) GetKillerInfo.get(2);
-		int KillerLV = (int) GetKillerInfo.get(1);
-		String KillerClass = (String) GetKillerInfo.get(3);
+			//*********************killer info********************//
+			GetKillerInfo = this.GetUserInfo(KillerName);
+			int KillerEXP = (int) GetKillerInfo.get(2);
+			int KillerLV = (int) GetKillerInfo.get(1);
+			String KillerClass = (String) GetKillerInfo.get(3);
+//y
+			//*********************getKilled info********************//
+			GetKilledInfo = this.GetUserInfo(getKilledName);
+			int KilledEXP = (int) GetKilledInfo.get(2);
+			int KilledLV = (int) GetKilledInfo.get(1);
 
-		//*********************getKilled info********************//
-		GetKilledInfo = this.GetUserInfo(getKilled);
-		int KilledEXP = (int) GetKilledInfo.get(2);
-		int KilledLV = (int) GetKilledInfo.get(1);
+			getKilled.sendMessage("SEX");
+			Killer.sendMessage("SEX");
+			if (KillerClass.equals("predator")) {
+				KillerEXP = KillerEXP + KilledEXP;
+			}
 
-		if(KillerClass.equals("predator")){
-			KilledEXP = KillerEXP + KilledEXP;
+			if (KillerEXP >= (KillerLV * (1000) * (KillerLV * 0.75))) {
+				KillerLV++;
+				KillerEXP = 0;
+			}
+
+			String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ? WHERE ID = ?";
+			try {
+				PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
+				stmt.setInt(1, KillerEXP);
+				stmt.setInt(2, KillerLV);
+				stmt.setString(3, KillerName);
+				stmt.executeUpdate();
+			} catch (Exception E) {
+				E.printStackTrace();
+			}
+			ShowBoard(p);
 		}
-
-		if(KillerEXP >= (KillerLV*(1000)*(KillerLV*0.75))) {
-			KillerLV++;
-			KillerEXP = 0;
-		}
-
-		String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ? WHERE ID = ?";
-		try {
-			PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
-			stmt.setInt(1, KillerEXP);
-			stmt.setInt(2, KillerLV);
-			stmt.setString(3, Killer);
-			stmt.executeUpdate();
-		}catch(Exception E) {
-			E.printStackTrace();
-		}
-		ShowBoard(p);
 	}
 
 	@EventHandler
@@ -127,45 +133,47 @@ public class PlayerLevel implements Listener {
 	//**********************사냥꾼 LV***************************//
 	@EventHandler
 	public void onPlayerKillMob(EntityDeathEvent e) {
-		Connect_DB connect = new Connect_DB();
-		String ID = null;
-		int EXP, LV= 0;
-		ArrayList<Object> GetUserInfo = new ArrayList<Object>();
-		LivingEntity entity = e.getEntity();
-		p = entity.getKiller();
-		ID = (String)p.getName();
-		GetUserInfo = this.GetUserInfo(ID);
-		EXP = (int) GetUserInfo.get(2);
-		LV = (int) GetUserInfo.get(1);
-		String Class = (String) GetUserInfo.get(3);
-	
-		if((entity.getType()==EntityType.ZOMBIE)&&(Class.equals("hunter"))){
-			EXP = EXP + 50;
-		} else if((entity.getType()==EntityType.SKELETON)&&(Class.equals("hunter"))){
-			EXP = EXP + 70;
-		} else if((entity.getType()==EntityType.ENDERMAN)&&(Class.equals("hunter"))){
-			EXP = EXP + 150;
-		} else if((entity.getType()==EntityType.CREEPER)&&(Class.equals("hunter"))){
-			EXP = EXP + 100;
-		} else {
-			EXP = EXP + 30;
+		if(e.getEntity() instanceof LivingEntity) {
+			Connect_DB connect = new Connect_DB();
+			String ID = null;
+			int EXP, LV = 0;
+			ArrayList<Object> GetUserInfo = new ArrayList<Object>();
+			LivingEntity entity = e.getEntity();
+			p = entity.getKiller();
+			ID = (String) p.getName();
+			GetUserInfo = this.GetUserInfo(ID);
+			EXP = (int) GetUserInfo.get(2);
+			LV = (int) GetUserInfo.get(1);
+			String Class = (String) GetUserInfo.get(3);
+
+			if ((entity.getType() == EntityType.ZOMBIE) && (Class.equals("hunter"))) {
+				EXP = EXP + 50;
+			} else if ((entity.getType() == EntityType.SKELETON) && (Class.equals("hunter"))) {
+				EXP = EXP + 70;
+			} else if ((entity.getType() == EntityType.ENDERMAN) && (Class.equals("hunter"))) {
+				EXP = EXP + 150;
+			} else if ((entity.getType() == EntityType.CREEPER) && (Class.equals("hunter"))) {
+				EXP = EXP + 100;
+			} else {
+				EXP = EXP + 30;
 			}
-		
-		if(EXP >= (LV*(1000)*(LV*0.75))) {
-			LV++;
-			EXP = 0;
+
+			if (EXP >= (LV * (1000) * (LV * 0.75))) {
+				LV++;
+				EXP = 0;
+			}
+			String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ? WHERE ID = ?";
+			try {
+				PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
+				stmt.setInt(1, EXP);
+				stmt.setInt(2, LV);
+				stmt.setString(3, ID);
+				stmt.executeUpdate();
+			} catch (Exception E) {
+				E.printStackTrace();
+			}
+			ShowBoard(p);
 		}
-		String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ? WHERE ID = ?";
-		try {
-			PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
-			stmt.setInt(1, EXP);
-			stmt.setInt(2, LV);
-			stmt.setString(3, ID);
-			stmt.executeUpdate();
-		}catch(Exception E) {
-			E.printStackTrace();
-		}
-		ShowBoard(p);
 	}
 
 	public void ShowBoard(Player p) {

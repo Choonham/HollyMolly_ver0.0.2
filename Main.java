@@ -20,6 +20,7 @@ public class Main extends JavaPlugin{
 		getCommand("login").setExecutor(new PlayerLogin());
 		getCommand("ImOut").setExecutor(new PlayerWithdraw());
 		this.getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
+		this.getServer().getPluginManager().registerEvents(new PlayerStuff(), this);
 		EntityLabel();
 	}
 	@Override
