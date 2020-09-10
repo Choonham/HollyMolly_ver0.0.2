@@ -42,7 +42,7 @@ public class PlayerLogin implements CommandExecutor, Listener {
 						if (rs.next()) {
 							if (rs.getString(1).equals(Password)) {
 								player.sendMessage(ID + "로그인");
-								this.isLoginList.add(ID);
+								isLoginList.add(ID);
 								Levelboard.ShowBoard(player);
 							} else player.sendMessage("아이디, 비밀번호를 확인해주세요.");
 						}
@@ -54,7 +54,6 @@ public class PlayerLogin implements CommandExecutor, Listener {
 		}
 		return true;
 	}
-
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		Player player = e.getPlayer();

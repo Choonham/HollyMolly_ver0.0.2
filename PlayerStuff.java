@@ -7,9 +7,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
+import java.util.Random;
 
 public class PlayerStuff implements Listener {
-    public HashMap<Player, ItemStack[]> items = new HashMap<Player, ItemStack[]>();
+    public HashMap<Player, ItemStack[]> items = new HashMap<>();
+
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         if (items.containsKey(event.getPlayer())) {
@@ -25,11 +27,10 @@ public class PlayerStuff implements Listener {
 
     @EventHandler()
     public void onDeath(PlayerDeathEvent e) {
-        if (e.getEntity() instanceof Player) {
-            ItemStack[] content = e.getEntity().getInventory().getContents();
-            items.put(e.getEntity(), content);
-            e.getDrops().clear();
-        }
+        e.getEntity();
+        ItemStack[] content = e.getEntity().getInventory().getContents();
+        items.put(e.getEntity(), content);
+        e.getDrops().clear();
     }
 
 }
