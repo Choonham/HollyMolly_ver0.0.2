@@ -50,7 +50,7 @@ public class Skills implements Listener {
         //************각 직업별 10랩 스킬
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
                 && (p.getItemInHand().getType().equals(Material.COAL))){
-            if(Class.equals("Arc") && LV > 1){
+            if(Class.equals("Arc") && LV > 9){
                 if(ArcSkill1CoolTime.containsKey(p.getName())){
                     if(ArcSkill1CoolTime.get(p.getName())>System.currentTimeMillis()) {
                         long timeleft = (ArcSkill1CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
@@ -76,7 +76,7 @@ public class Skills implements Listener {
                     }
                 }
             }
-            if(Class.equals("hunter") && LV > 1){
+            if(Class.equals("hunter") && LV > 9){
                 if(hunterSkill1CoolTime.containsKey(p.getName())){
                     if(hunterSkill1CoolTime.get(p.getName())>System.currentTimeMillis()) {
                         long timeleft = (hunterSkill1CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
@@ -87,7 +87,7 @@ public class Skills implements Listener {
                 hunterSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
                 e.getPlayer().launchProjectile(Fireball.class);
             }
-            if(Class.equals("predator")){
+            if(Class.equals("predator")&&LV > 9){
                 if(predatorSkill1CoolTime.containsKey(p.getName())){
                     if(predatorSkill1CoolTime.get(p.getName())>System.currentTimeMillis()) {
                         long timeleft = (predatorSkill1CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
@@ -170,7 +170,6 @@ public class Skills implements Listener {
             }
             }
         }
-
 
     public String rpGetPlayerDirection(Player playerSelf) {
         String dir = "";
