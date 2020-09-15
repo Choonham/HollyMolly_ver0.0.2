@@ -2,6 +2,7 @@ package com.jun.hollymolly;
 
 import com.sun.scenario.effect.InvertMask;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -26,15 +28,13 @@ public class Shop implements CommandExecutor, Listener {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            vault = Bukkit.createInventory(player, 18, "shop");
+            vault = Bukkit.createInventory(player, 36, "shop");
             if(label.equalsIgnoreCase("shop")) {
                 if(args.length == 1) {
                     String material = args[0];
                         if(material.equalsIgnoreCase("block")) {
-                            items.add(0,new ItemStack(Material.IRON_BLOCK, 1));
-                            items.add(1,new ItemStack(Material.ICE, 1));
-                            vault.setItem(1, items.get(0));
-                            vault.setItem(2, items.get(1));
+                            vault.setItem(1, SetItem(items, 0, Material.BEDROCK, "100000"));
+                            vault.setItem(2, SetItem(items, 1, Material.GLASS, "1000"));
                             player.openInventory(vault);
                         }
                 }
@@ -56,14 +56,14 @@ public class Shop implements CommandExecutor, Listener {
             int Money = (int)GetUserInfo.get(7);
             ItemStack Selected = e.getCurrentItem();
             if(Selected.equals(items.get(0))){
-                if(Money >= 10000){
-                    Money = Money - 10000;
+                if(Money >= 100000){
+                    Money = Money - 100000;
                     player.getInventory().addItem(Selected);
                     e.setCancelled(true);
                 } else e.setCancelled(true);
             } else if(Selected.equals(items.get(1))){
-                if(Money >= 10000){
-                    Money = Money - 10000;
+                if(Money >= 1000){
+                    Money = Money - 1000;
                     player.getInventory().addItem(Selected);
                     e.setCancelled(true);
                 } else e.setCancelled(true);
@@ -84,6 +84,13 @@ public class Shop implements CommandExecutor, Listener {
         }catch(Exception E) {
             E.printStackTrace();
         }
-
+    }
+    public ItemStack SetItem(ArrayList<ItemStack> items, int i,
+                        Material material, String Price){
+        items.add(i, new ItemStack(material, 1));
+        ItemMeta meta = items.get(i).getItemMeta();
+        meta.setDisplayName(ChatColor.GOLD + Price);
+        items.get(i).setItemMeta(meta);
+        return items.get(i);
     }
 }
