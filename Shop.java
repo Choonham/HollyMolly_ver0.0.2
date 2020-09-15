@@ -1,6 +1,6 @@
 package com.jun.hollymolly;
 
-import com.sun.scenario.effect.InvertMask;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)j
 public class Shop implements CommandExecutor, Listener {
     ArrayList<Object> GetUserInfo = new ArrayList<Object>();
     static public Inventory vault;
