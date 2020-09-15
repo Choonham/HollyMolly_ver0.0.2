@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
-
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
 public class PlayerLevel implements Listener {
 	Player p;
 	PlayerLogin login = new PlayerLogin();

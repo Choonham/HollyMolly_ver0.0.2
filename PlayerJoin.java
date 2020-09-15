@@ -5,7 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
 public class PlayerJoin implements CommandExecutor {
 	public int LV = 1;
 	public int EXP = 0; 

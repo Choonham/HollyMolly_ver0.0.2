@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
 public class Shop implements CommandExecutor, Listener {
     ArrayList<Object> GetUserInfo = new ArrayList<Object>();
     static public Inventory vault;

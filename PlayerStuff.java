@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Random;
-
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
 public class PlayerStuff implements Listener {
     public HashMap<Player, ItemStack[]> items = new HashMap<>();
 

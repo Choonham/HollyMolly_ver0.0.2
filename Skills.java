@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
 public class Skills implements Listener {
     PlayerLevel PL = new PlayerLevel();
     Connect_DB connect = new Connect_DB();
