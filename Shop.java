@@ -33,8 +33,25 @@ public class Shop implements CommandExecutor, Listener {
                 if(args.length == 1) {
                     String material = args[0];
                         if(material.equalsIgnoreCase("block")) {
-                            vault.setItem(1, SetItem(items, 0, Material.BEDROCK, "100000"));
-                            vault.setItem(2, SetItem(items, 1, Material.GLASS, "1000"));
+                            vault.setItem(1, SetItem(items, 0, Material.BEDROCK, "기반암: 100000"));
+                            vault.setItem(2, SetItem(items, 1, Material.GLASS, "유리: 1000"));
+                            vault.setItem(3, SetItem(items, 2, Material.BLACK_WOOL, "검정색 양털: 1000"));
+                            vault.setItem(4, SetItem(items, 3, Material.BLUE_WOOL, "파랑색 양털: 1000"));
+                            vault.setItem(5, SetItem(items, 4, Material.WHITE_WOOL, "흰색 양털: 1000"));
+                            vault.setItem(7, SetItem(items, 6, Material.ORANGE_WOOL, "오렌지색 양털: 1000"));
+                            vault.setItem(8, SetItem(items, 7, Material.YELLOW_WOOL, "노랑색 양털: 1000"));
+                            vault.setItem(9, SetItem(items, 8, Material.PINK_WOOL, "핑크색 양털: 1000"));
+                            vault.setItem(10, SetItem(items, 9, Material.GRAY_WOOL, "회색 양털: 1000"));
+                            vault.setItem(11, SetItem(items, 10, Material.CYAN_WOOL, "읭: 1000"));
+                            vault.setItem(12, SetItem(items, 11, Material.BROWN_WOOL, "갈색 양털: 1000"));
+                            vault.setItem(13, SetItem(items, 12, Material.GREEN_WOOL, "초록색 양털: 1000"));
+                            vault.setItem(14, SetItem(items, 13, Material.RED_WOOL, "빨간색 양털: 1000"));
+                            vault.setItem(15, SetItem(items, 14, Material.LIME_WOOL, "라임색 양털: 1000"));
+                            vault.setItem(16, SetItem(items, 15, Material.STONE_BRICK_SLAB, "돌 반블록: 500"));
+                            vault.setItem(17, SetItem(items, 16, Material.BRICK_SLAB, "벽돌 반블록: 1000"));
+                            vault.setItem(18, SetItem(items, 17, Material.NETHER_BRICK_SLAB, "네더 벽돌 반블록: 3000"));
+                            vault.setItem(19, SetItem(items, 18, Material.QUARTZ_SLAB, "읭 반블록: 5000"));
+                            vault.setItem(20, SetItem(items, 19, Material.BRICKS, "벽돌: 5000"));
                             player.openInventory(vault);
                         }
                 }
@@ -64,6 +81,114 @@ public class Shop implements CommandExecutor, Listener {
             } else if(Selected.equals(items.get(1))){
                 if(Money >= 1000){
                     Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(2))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(3))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(4))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(5))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(6))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(7))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(8))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(9))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(10))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(11))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(12))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(13))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(14))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(15))){
+                if(Money >= 500){
+                    Money = Money - 500;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(16))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(17))){
+                if(Money >= 3000){
+                    Money = Money - 3000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(18))){
+                if(Money >= 5000){
+                    Money = Money - 5000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(19))){
+                if(Money >= 5000){
+                    Money = Money - 5000;
                     player.getInventory().addItem(Selected);
                     e.setCancelled(true);
                 } else e.setCancelled(true);
