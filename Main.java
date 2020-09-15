@@ -16,9 +16,12 @@ public class Main extends JavaPlugin{
 		getCommand("join").setExecutor(new PlayerJoin());
 		getCommand("login").setExecutor(new PlayerLogin());
 		getCommand("ImOut").setExecutor(new PlayerWithdraw());
+		getCommand("shop").setExecutor(new Shop());
 		this.getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
 		this.getServer().getPluginManager().registerEvents(new PlayerStuff(), this);
 		this.getServer().getPluginManager().registerEvents(new Skills(), this);
+		this.getServer().getPluginManager().registerEvents(new Shop(), this);
+
 		EntityLabel();
 	}
 	@Override
