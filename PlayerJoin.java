@@ -24,7 +24,7 @@ public class PlayerJoin implements CommandExecutor {
 					connect.JoinQueryCommand("INSERT INTO PLAYERLOGININFO VALUES (\'"+ID+"\',\'"+Password+"\')");
 					connect.JoinQueryCommand("INSERT INTO PLAYERINFO (ID, LV, EXP, class) VALUES (\'"+ ID + "\',\'"+ LV + "\',\'" + EXP + "\',\'" + Class + "\')");
 					player.sendMessage("WELCOME, " + ID + "<" + Class + ">");
-					connect.JoinQueryCommand("CREATE TABLE " + ID +"ITEMS (ITEMNAME VARCHAR(255), NUM INT);");
+					//connect.JoinQueryCommand("CREATE TABLE " + ID +"ITEMS (ITEMNAME VARCHAR(255), NUM INT);");
 					} else {
 						player.sendMessage("비밀번호가 일치하지 않습니다.");
 					}

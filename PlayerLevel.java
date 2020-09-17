@@ -31,6 +31,7 @@ public class PlayerLevel implements Listener {
 	Random rand = new Random();
 	ArrayList<Object> GetKillerInfo = new ArrayList<Object>();
 	ArrayList<Object> GetKilledInfo = new ArrayList<Object>();
+	public static boolean isHome = true;
 	public PlayerLevel() {}
 
 	@EventHandler
@@ -138,23 +139,24 @@ public class PlayerLevel implements Listener {
 		boolean hasGive15s = Give15s.stream().anyMatch(s ->  s == getMat);
 		boolean hasGive30s = Give30s.stream().anyMatch(s ->  s == getMat);
 		boolean hasGive50s = Give50s.stream().anyMatch(s ->  s == getMat);
-		
-		if (hasGive15s) {
-			if(Class.equals("Arc")) EXP = EXP + 100;
-			else EXP = EXP + 50;
-			MONEY = MONEY + 1000;
-		} else if(hasGive30s) {
-			if(Class.equals("Arc")) EXP = EXP + 100;
-			else EXP = EXP + 50;
-			MONEY = MONEY + 1000;
-		} else if(hasGive50s) {
-			if(Class.equals("Arc")) EXP = EXP + 100;
-			else EXP = EXP + 50;
-			MONEY = MONEY + 1000;
-		} else {
-			if(Class.equals("Arc")) EXP = EXP + 100;
-			else EXP = EXP + 50;
-			MONEY = MONEY + 1000;
+		if(isHome) {
+			if (hasGive15s) {
+				if(Class.equals("Arc")) EXP = EXP + 100;
+				else EXP = EXP + 50;
+				MONEY = MONEY + 1000;
+			} else if(hasGive30s) {
+				if(Class.equals("Arc")) EXP = EXP + 100;
+				else EXP = EXP + 50;
+				MONEY = MONEY + 1000;
+			} else if(hasGive50s) {
+				if(Class.equals("Arc")) EXP = EXP + 100;
+				else EXP = EXP + 50;
+				MONEY = MONEY + 1000;
+			} else {
+				if(Class.equals("Arc")) EXP = EXP + 100;
+				else EXP = EXP + 50;
+				MONEY = MONEY + 1000;
+			}
 		}
 		
 		if(EXP >= (LV*(1000)*(LV*0.75))) {
