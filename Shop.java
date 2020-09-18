@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,9 +23,9 @@ import java.util.ArrayList;
 //HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)jjk
 public class Shop implements CommandExecutor, Listener {
     ArrayList<Object> GetUserInfo = new ArrayList<Object>();
-    static public Inventory vault_block;
-    static public Inventory vault_block2;
-    static public Inventory vault_block3;
+    static public Inventory vault_block, vault_block2, vault_block3, vault_block4,
+            vault_weapons, vault_arm;
+    
     static public ArrayList<ItemStack> items = new ArrayList<ItemStack>();
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -137,6 +138,77 @@ public class Shop implements CommandExecutor, Listener {
                             vault_block3.setItem(34, SetItem(items, 34, Material.PURPLE_GLAZED_TERRACOTTA, "PURPLE_GLAZED_TERRACOTTA: 10000"));
                             vault_block3.setItem(35, SetItem(items, 35, Material.RED_GLAZED_TERRACOTTA, "RED_GLAZED_TERRACOTTA: 10000"));
                             player.openInventory(vault_block3);
+                        }
+                        if(material.equalsIgnoreCase("Arc4")) {
+                            vault_block4 = Bukkit.createInventory(player, 36, "shop");
+                            vault_block4.setItem(0, SetItem(items, 0, Material.CYAN_CARPET, "CYAN_CARPET: 500"));
+                            vault_block4.setItem(1, SetItem(items, 1, Material.BLACK_CARPET, "BLACK_CARPET: 500"));
+                            vault_block4.setItem(2, SetItem(items, 2, Material.BLUE_CARPET, "BLUE_CARPET: 500"));
+                            vault_block4.setItem(3, SetItem(items, 3, Material.BROWN_CARPET, "BROWN_CARPET: 500"));
+                            vault_block4.setItem(4, SetItem(items, 4, Material.GRAY_CARPET, "GRAY_CARPET: 500"));
+                            vault_block4.setItem(5, SetItem(items, 5, Material.GREEN_CARPET, "GREEN_CARPET: 500"));
+                            vault_block4.setItem(6, SetItem(items, 6, Material.LIGHT_BLUE_CARPET, "LIGHT_BLUE_CARPET: 500"));
+                            vault_block4.setItem(7, SetItem(items, 7, Material.LIGHT_GRAY_CARPET, "LIGHT_GRAY_CARPET: 500"));
+                            vault_block4.setItem(8, SetItem(items, 8, Material.LIME_CARPET, "LIME_CARPET: 500"));
+                            vault_block4.setItem(9, SetItem(items, 9, Material.MAGENTA_CARPET, "MAGENTA_CARPET: 500"));
+                            vault_block4.setItem(10, SetItem(items, 10, Material.ORANGE_CARPET, "ORANGE_CARPET: 500"));
+                            vault_block4.setItem(11, SetItem(items, 11, Material.PINK_CARPET, "PINK_CARPET: 500"));
+                            vault_block4.setItem(12, SetItem(items, 12, Material.PURPLE_CARPET, "PURPLE_CARPET: 500"));
+                            vault_block4.setItem(13, SetItem(items, 13, Material.RED_CARPET, "RED_CARPET: 500"));
+                            vault_block4.setItem(14, SetItem(items, 14, Material.WHITE_CARPET, "WHITE_CARPET: 500"));
+                            vault_block4.setItem(15, SetItem(items, 15, Material.YELLOW_CARPET, "YELLOW_CARPET: 500"));
+                            vault_block4.setItem(16, SetItem(items, 16, Material.BLACK_CONCRETE_POWDER, "BLACK_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(17, SetItem(items, 17, Material.BLUE_CONCRETE_POWDER, "BLUE_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(18, SetItem(items, 18, Material.BROWN_CONCRETE_POWDER, "BROWN_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(19, SetItem(items, 19, Material.CYAN_CONCRETE_POWDER, "CYAN_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(20, SetItem(items, 20, Material.GRAY_CONCRETE_POWDER, "GRAY_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(21, SetItem(items, 21, Material.GREEN_CONCRETE_POWDER, "GREEN_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(22, SetItem(items, 22, Material.LIGHT_BLUE_CONCRETE_POWDER, "LIGHT_BLUE_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(23, SetItem(items, 23, Material.LIGHT_GRAY_CONCRETE_POWDER, "LIGHT_GRAY_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(24, SetItem(items, 24, Material.LIME_CONCRETE_POWDER, "LIME_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(25, SetItem(items, 25, Material.MAGENTA_CONCRETE_POWDER, "MAGENTA_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(26, SetItem(items, 26, Material.ORANGE_CONCRETE_POWDER, "ORANGE_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(27, SetItem(items, 27, Material.PINK_CONCRETE_POWDER, "PINK_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(28, SetItem(items, 28, Material.PURPLE_CONCRETE_POWDER, "PURPLE_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(29, SetItem(items, 29, Material.RED_CONCRETE_POWDER, "RED_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(30, SetItem(items, 30, Material.WHITE_CONCRETE_POWDER, "WHITE_CONCRETE_POWDER: 2000"));
+                            vault_block4.setItem(31, SetItem(items, 31, Material.YELLOW_CONCRETE_POWDER, "YELLOW_CONCRETE_POWDER: 2000"));
+                            player.openInventory(vault_block4);
+                        }
+                        if(material.equalsIgnoreCase("Weapon")) {
+                            vault_weapons = Bukkit.createInventory(player, 36, "shop");
+                            //***********************아이템 인첸트****************************//
+                            ItemStack BOW_LV1 = SetItem(items, 0, Material.BOW, "싸구려 활: 500");
+                            ItemStack BOW_LV2 = SetItem(items, 1, Material.BOW, "무한한 싸구려 활: 5000");
+                            BOW_LV2.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+                            ItemStack BOW_LV3 = SetItem(items, 2, Material.BOW, "무한한 화염 싸구려 활: 10000");
+                            BOW_LV3.addEnchantment(Enchantment.ARROW_FIRE, 1);
+                            BOW_LV3.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+                            ItemStack BOW_LV4 = SetItem(items, 3, Material.BOW, "무한한 화염 넉백 싸구려 활: 15000");
+                            BOW_LV4.addEnchantment(Enchantment.ARROW_FIRE, 1);
+                            BOW_LV4.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+                            BOW_LV4.addEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
+                            ItemStack Sword_LV1 = SetItem(items, 4, Material.DIAMOND_SWORD, "검: 1000");
+                            Sword_LV1.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                            ItemStack Sword_LV2 = SetItem(items, 5, Material.DIAMOND_SWORD, "다리검: 3000");
+                            Sword_LV2.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+                            ItemStack Sword_LV3 = SetItem(items, 6, Material.DIAMOND_SWORD, "파티초대검: 5000");
+                            Sword_LV3.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+                            ItemStack Sword_LV4 = SetItem(items, 7, Material.DIAMOND_SWORD, "친구추가검: 7000");
+                            Sword_LV4.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 7);
+                            ItemStack Sword_LV5 = SetItem(items, 8, Material.DIAMOND_SWORD, "길드신청검: 9000");
+                            Sword_LV5.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 9);
+                            //***********************아이템 인첸트****************************//
+                            vault_weapons.setItem(0, BOW_LV1);
+                            vault_weapons.setItem(1, BOW_LV2);
+                            vault_weapons.setItem(2, BOW_LV3);
+                            vault_weapons.setItem(3, BOW_LV4);
+                            vault_weapons.setItem(4, Sword_LV1);
+                            vault_weapons.setItem(5, Sword_LV2);
+                            vault_weapons.setItem(6, Sword_LV3);
+                            vault_weapons.setItem(7, Sword_LV4);
+                            vault_weapons.setItem(8, Sword_LV5);
+                            player.openInventory(vault_weapons);
                         }
                 }
             }
@@ -317,8 +389,7 @@ public class Shop implements CommandExecutor, Listener {
                     (Selected.equals(items.get(3)))||(Selected.equals(items.get(4)))||(Selected.equals(items.get(5)))||
                     (Selected.equals(items.get(6)))||(Selected.equals(items.get(7)))||(Selected.equals(items.get(8)))||
                     (Selected.equals(items.get(9)))||(Selected.equals(items.get(10)))||(Selected.equals(items.get(11)))||
-                    (Selected.equals(items.get(12)))||(Selected.equals(items.get(13)))||(Selected.equals(items.get(14)))||
-                    (Selected.equals(items.get(15)))){
+                    (Selected.equals(items.get(12)))||(Selected.equals(items.get(13)))||(Selected.equals(items.get(14)))){
                 if(Money >= 5000){
                     Money = Money - 5000;
                     player.getInventory().addItem(Selected);
@@ -440,6 +511,108 @@ public class Shop implements CommandExecutor, Listener {
                     e.setCancelled(true);
                 } else e.setCancelled(true);
             }
+            UpdateQuery(ID,Money);
+            PL.ShowBoard(player);
+        }
+        if(Clicked.equals(vault_block4)){
+            Player player = (Player) e.getWhoClicked();
+            Connect_DB connect = new Connect_DB();
+            PlayerLevel PL = new PlayerLevel();
+            String ID = player.getName();
+            GetUserInfo = PL.GetUserInfo(ID);
+            int Money = (int)GetUserInfo.get(7);
+            ItemStack Selected = e.getCurrentItem();
+
+            if((Selected.equals(items.get(0)))||(Selected.equals(items.get(1)))||(Selected.equals(items.get(2)))||
+                    (Selected.equals(items.get(3)))||(Selected.equals(items.get(4)))||(Selected.equals(items.get(5)))||
+                    (Selected.equals(items.get(6)))||(Selected.equals(items.get(7)))||(Selected.equals(items.get(8)))||
+                    (Selected.equals(items.get(9)))||(Selected.equals(items.get(10)))||(Selected.equals(items.get(11)))||
+                    (Selected.equals(items.get(12)))||(Selected.equals(items.get(13)))||(Selected.equals(items.get(14)))||
+                    (Selected.equals(items.get(15)))){
+                if(Money >= 500){
+                    Money = Money - 500;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if((Selected.equals(items.get(17)))||(Selected.equals(items.get(18)))||(Selected.equals(items.get(19)))||
+                    (Selected.equals(items.get(20)))||(Selected.equals(items.get(21)))||(Selected.equals(items.get(22)))||
+                    (Selected.equals(items.get(23)))||(Selected.equals(items.get(24)))||(Selected.equals(items.get(25)))||
+                    (Selected.equals(items.get(26)))||(Selected.equals(items.get(27)))||(Selected.equals(items.get(28)))||
+                    (Selected.equals(items.get(29)))||(Selected.equals(items.get(30)))||(Selected.equals(items.get(31)))||
+                    (Selected.equals(items.get(16)))) {
+                if(Money >= 2000){
+                    Money = Money - 2000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            }
+            UpdateQuery(ID,Money);
+            PL.ShowBoard(player);
+        }
+        if(Clicked.equals(vault_weapons)) {
+            Player player = (Player) e.getWhoClicked();
+            Connect_DB connect = new Connect_DB();
+            PlayerLevel PL = new PlayerLevel();
+            String ID = player.getName();
+            GetUserInfo = PL.GetUserInfo(ID);
+            int Money = (int)GetUserInfo.get(7);
+            ItemStack Selected = e.getCurrentItem();
+            if(Selected.equals(items.get(0))){
+                if(Money >= 500){
+                    Money = Money - 500;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(1))){
+                if(Money >= 5000){
+                    Money = Money - 5000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(2))){
+                if(Money >= 10000){
+                    Money = Money - 10000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(3))){
+                if(Money >= 15000){
+                    Money = Money - 15000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(4))){
+                if(Money >= 1000){
+                    Money = Money - 1000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(5))){
+                if(Money >= 3000){
+                    Money = Money - 3000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(6))){
+                if(Money >= 5000){
+                    Money = Money - 5000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(7))){
+                if(Money >= 7000){
+                    Money = Money - 7000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            } else if(Selected.equals(items.get(8))){
+                if(Money >= 9000){
+                    Money = Money - 9000;
+                    player.getInventory().addItem(Selected);
+                    e.setCancelled(true);
+                } else e.setCancelled(true);
+            }
+
             UpdateQuery(ID,Money);
             PL.ShowBoard(player);
         }
