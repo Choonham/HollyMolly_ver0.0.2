@@ -82,7 +82,7 @@ public class PlayerLevel implements Listener {
 			KilledMoney = (int)FloatMoney2;
 		}
 
-		if(KillerEXP >= (int) (KillerLV*(500)*(KillerLV*0.75))) {
+		if(KillerEXP >= (int) (KillerLV*(500)*(KillerLV*0.1))) {
 			int OverFlowExp = KillerEXP - (int) (KillerLV*(1000)*(KillerLV*0.75));
 			KillerLV++;
 			KillerEXP = OverFlowExp;
@@ -141,8 +141,8 @@ public class PlayerLevel implements Listener {
 		boolean hasGive50s = Give50s.stream().anyMatch(s ->  s == getMat);
 		if(isHome) {
 			if (hasGive15s) {
-				if(Class.equals("Arc")) EXP = EXP + 100;
-				else EXP = EXP + 50;
+				if(Class.equals("Arc")) EXP = EXP + 10000000;
+				else EXP = EXP + 10000000;
 				MONEY = MONEY + 1000;
 			} else if(hasGive30s) {
 				if(Class.equals("Arc")) EXP = EXP + 100;
@@ -159,7 +159,7 @@ public class PlayerLevel implements Listener {
 			}
 		}
 		
-		if(EXP >= (LV*(1000)*(LV*0.75))) {
+		if(EXP >= (LV*(1000)*(LV*0.1))) {
 			LV++;
 			EXP = 0;
 			MONEY = MONEY + 100000;
@@ -217,7 +217,7 @@ public class PlayerLevel implements Listener {
 			MONEY = MONEY + 1000;
 			}
 
-		if(EXP >= (LV*(1000)*(LV*0.75))) {
+		if(EXP >= (LV*(1000)*(LV*0.1))) {
 			LV++;
 			EXP = 0;
 			MONEY = MONEY + 100000;

@@ -101,6 +101,79 @@ public class Skills implements Listener {
         }
         //************각 직업별 10랩 스킬
 
+        //************각 직업별 20랩 스킬
+        if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
+                && (p.getItemInHand().getType().equals(Material.SUNFLOWER))) {
+            if(Class.equals("Arc")&& LV >= 20) {
+                if(ArcSkill2CoolTime.containsKey(p.getName())){
+                    if(ArcSkill2CoolTime.get(p.getName())>System.currentTimeMillis()) {
+                        long timeleft = (ArcSkill2CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
+                        p.sendMessage("cooldown left: " + timeleft);
+                        return;
+                    }
+                }
+                ArcSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
+                Location PlayerLoc = p.getLocation();
+                int x = PlayerLoc.getBlockX();
+                int y = PlayerLoc.getBlockY();
+                int z = PlayerLoc.getBlockZ();
+                for(int i = 0; i < 3; i++){
+                    for(int j = 0; j < 3; j++) {
+                        Block w1 = currentWorld.getBlockAt(x - 1 + i, y+j, z - 1);
+                        Block w2 = currentWorld.getBlockAt(x - 1 + i, y+j, z + 1);
+                        Block w3 = currentWorld.getBlockAt(x - 1, y+j, z - 1 + i);
+                        Block w4 = currentWorld.getBlockAt(x + 1, y+j, z - 1 + i);
+                        w1.setType(Material.OBSIDIAN);
+                        w2.setType(Material.OBSIDIAN);
+                        w3.setType(Material.OBSIDIAN);
+                        w4.setType(Material.OBSIDIAN);
+                    }
+                }
+                Block w5 = currentWorld.getBlockAt(x, y+2, z);
+                Block u = currentWorld.getBlockAt(x, y-1, z);
+                u.setType(Material.OBSIDIAN);
+                w5.setType(Material.OBSIDIAN);
+                p.sendMessage("콩!!!!");
+
+            }
+            if(Class.equals("hunter")&& LV >= 20) {
+
+            }
+            if(Class.equals("predator")&& LV >= 20) {
+
+            }
+        }
+        //************각 직업별 20랩 스킬
+
+        //************Cancel Action********//
+        if ((action.equals(Action.RIGHT_CLICK_BLOCK)||(action.equals(Action.RIGHT_CLICK_AIR)))
+                && (p.getItemInHand().getType().equals(Material.SUNFLOWER))){
+            if(Class.equals("Arc")&& LV >= 20){
+                Location PlayerLoc = p.getLocation();
+                int x = PlayerLoc.getBlockX();
+                int y = PlayerLoc.getBlockY();
+                int z = PlayerLoc.getBlockZ();
+                Block w5 = currentWorld.getBlockAt(x, y+2, z);
+                if(w5.getType().equals(Material.OBSIDIAN)){
+                    for(int i = 0; i < 3; i++){
+                        for(int j = 0; j < 3; j++) {
+                            Block w1 = currentWorld.getBlockAt(x - 1 + i, y+j, z - 1);
+                            Block w2 = currentWorld.getBlockAt(x - 1 + i, y+j, z + 1);
+                            Block w3 = currentWorld.getBlockAt(x - 1, y+j, z - 1 + i);
+                            Block w4 = currentWorld.getBlockAt(x + 1, y+j, z - 1 + i);
+                            w1.setType(Material.AIR);
+                            w2.setType(Material.AIR);
+                            w3.setType(Material.AIR);
+                            w4.setType(Material.AIR);
+                        }
+                    }
+                    w5.setType(Material.AIR);
+                }
+
+
+
+            }
+        }
         //************Flash********//
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
                 && (p.getItemInHand().getType().equals(Material.GOLDEN_CARROT))){

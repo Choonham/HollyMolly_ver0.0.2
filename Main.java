@@ -18,6 +18,8 @@ public class Main extends JavaPlugin{
 		getCommand("ImOut").setExecutor(new PlayerWithdraw());
 		getCommand("shop").setExecutor(new Shop());
 		getCommand("myblocks").setExecutor(new Properties());
+		getCommand("check").setExecutor((new Properties()));
+		getCommand("rm").setExecutor((new Properties()));
 		this.getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
 		this.getServer().getPluginManager().registerEvents(new PlayerStuff(), this);
 		this.getServer().getPluginManager().registerEvents(new Skills(), this);

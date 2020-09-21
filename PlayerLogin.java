@@ -15,6 +15,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
 //HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
 public class PlayerLogin implements CommandExecutor, Listener {
 	//public static boolean isLogin = false;
@@ -60,6 +62,15 @@ public class PlayerLogin implements CommandExecutor, Listener {
 		if (!isLoginList.contains(player.getName())) {
 			e.setCancelled(true);
 			player.sendMessage("로그인이 필요합니다.");
+		}
+	}
+
+	@EventHandler
+	public void onLogout(PlayerQuitEvent e){
+		Player player = e.getPlayer();
+		String ID = player.getName();
+		if(isLoginList.contains(ID)){
+			isLoginList.remove(ID);
 		}
 	}
 }
