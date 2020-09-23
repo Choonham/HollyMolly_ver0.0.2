@@ -38,6 +38,7 @@ public class PlayerLevel implements Listener {
 		Player getKilled = e.getEntity();
 		String getKilledName = getKilled.getName();
 		Player Killer = e.getEntity().getKiller();
+		if(Killer == null){return;}
 		String KillerName = Killer.getName();
 		int randInt = rand.nextInt(40);
 		Connect_DB connect = new Connect_DB();

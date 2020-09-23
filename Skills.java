@@ -158,7 +158,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                hunterSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (3*1000));
+                hunterSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (15*1000));
                 int X = p.getLocation().getBlockX();
                 int Y = p.getLocation().getBlockY();
                 int Z = p.getLocation().getBlockZ();
