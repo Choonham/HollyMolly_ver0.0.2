@@ -1,12 +1,17 @@
 package com.jun.hollymolly;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 //HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
-public class PlayerJoin implements CommandExecutor {
+public class PlayerJoin implements CommandExecutor, Listener {
 	public int LV = 1;
 	public int EXP = 0; 
 	@Override
@@ -35,6 +40,14 @@ public class PlayerJoin implements CommandExecutor {
 		}
 		return true;
 	}
+	@EventHandler
+	public void OnJoin(PlayerJoinEvent e){
+		if(NPC.getNPCs() == null) return;
+		if(NPC.getNPCs().isEmpty()) return;
+		NPC.addJoinPacket(e.getPlayer());
+
+	}
+
 }
 
 

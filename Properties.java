@@ -47,14 +47,14 @@ public class Properties implements Listener, CommandExecutor {
         PL.isHome = true;
         if ((BlockLoc.getBlockX() < 105) && (BlockLoc.getBlockX() > -185)) {
             if ((BlockLoc.getBlockZ() < 131) && (BlockLoc.getBlockZ() > -251)) {
-                p.sendMessage(ChatColor.RED +"Public property는 변경이 불가능합니다!");
-                e.setCancelled(true);
+                //p.sendMessage(ChatColor.RED +"Public property는 변경이 불가능합니다!");
+                //e.setCancelled(true);
                 PL.isHome = false;
             }
         }
         for(int i = 0; i < who.size(); i++) {
-            if ((BlockLoc.getBlockX() < X1.get(i)) && (BlockLoc.getBlockX() > X2.get(i))) {
-                if ((BlockLoc.getBlockZ() < Z1.get(i)) && (BlockLoc.getBlockZ() > Z2.get(i))) {
+            if ((BlockLoc.getBlockX() <= X1.get(i)) && (BlockLoc.getBlockX() >= X2.get(i))) {
+                if ((BlockLoc.getBlockZ() <= Z1.get(i)) && (BlockLoc.getBlockZ() >= Z2.get(i))) {
                     if (!who.get(i).equals(ID)) {
                         e.setCancelled(true);
                         p.sendMessage("This is not your property!!");
@@ -85,14 +85,14 @@ public class Properties implements Listener, CommandExecutor {
         //Location whereIsP = new Location(p.getWorld(), PlayerLoc.getBlockX(), PlayerLoc.getBlockY(), PlayerLoc.getBlockZ());
         if ((BlockLoc.getBlockX() < 105) && (BlockLoc.getBlockX() > -185)) {
             if ((BlockLoc.getBlockZ() < 131) && (BlockLoc.getBlockZ() > -251)) {
-                p.sendMessage(ChatColor.RED +"Public property는 변경이 불가능합니다!");
-                e.setCancelled(true);
+                //p.sendMessage(ChatColor.RED +"Public property는 변경이 불가능합니다!");
+                //e.setCancelled(true);
                 PL.isHome = false;
             }
         }
         for(int i = 0; i < who.size(); i++){
-            if ((BlockLoc.getBlockX() < X1.get(i)) && (BlockLoc.getBlockX() > X2.get(i))) {
-                if ((BlockLoc.getBlockZ() < Z1.get(i)) && (BlockLoc.getBlockZ() > Z2.get(i))) {
+            if ((BlockLoc.getBlockX() <= X1.get(i)) && (BlockLoc.getBlockX() >= X2.get(i))) {
+                if ((BlockLoc.getBlockZ() <= Z1.get(i)) && (BlockLoc.getBlockZ() >= Z2.get(i))) {
                     if(!who.get(i).equals(ID)) {
                         e.setCancelled(true);
                         p.sendMessage("This is not your property!!");
@@ -165,7 +165,7 @@ public class Properties implements Listener, CommandExecutor {
                         } else {
                             player.sendMessage("You don't have enough money for this.");
                         }
-                    } else player.sendMessage("토지는 5개 초과로 소유할 수 없습니다!");
+                    } else player.sendMessage("토지는 6개 초과로 소유할 수 없습니다!");
                 }
             } else if (label.equalsIgnoreCase("check")){
                 ArrayList<ArrayList<?>> onIDs = new ArrayList<>();

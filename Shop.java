@@ -3,7 +3,9 @@ package com.jun.hollymolly;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -27,6 +30,50 @@ public class Shop implements CommandExecutor, Listener {
             vault_weapons, vault_arm;
     
     static public ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+
+    @EventHandler
+    public void onClickBlock(PlayerInteractEvent e){
+        Player player = e.getPlayer();
+        Block clickedBlock = (Block) e.getClickedBlock();
+        if(clickedBlock!=null) {
+            Location blockLoc = clickedBlock.getLocation();
+            int blockX = blockLoc.getBlockX();
+            int blockY = blockLoc.getBlockY();
+            int blockZ = blockLoc.getBlockZ();
+            Location clickedBlockLoc = new Location(player.getWorld(), blockX, blockY, blockZ);
+            Location shopBlock = new Location(player.getWorld(), 188, 64, -13);
+            if (clickedBlockLoc.equals(shopBlock)) {
+                vault_block = Bukkit.createInventory(player, 36, "shop");
+                vault_block.setItem(0, SetItem(items, 0, Material.BEDROCK, "기반암: 100000"));
+                vault_block.setItem(1, SetItem(items, 1, Material.GLASS, "유리: 3000"));
+                vault_block.setItem(2, SetItem(items, 2, Material.BLACK_WOOL, "검정색 양털: 1000"));
+                vault_block.setItem(3, SetItem(items, 3, Material.BLUE_WOOL, "파랑색 양털: 1000"));
+                vault_block.setItem(4, SetItem(items, 4, Material.WHITE_WOOL, "흰색 양털: 1000"));
+                vault_block.setItem(5, SetItem(items, 5, Material.ORANGE_WOOL, "오렌지색 양털: 1000"));
+                vault_block.setItem(6, SetItem(items, 6, Material.YELLOW_WOOL, "노랑색 양털: 1000"));
+                vault_block.setItem(7, SetItem(items, 7, Material.PINK_WOOL, "핑크색 양털: 1000"));
+                vault_block.setItem(8, SetItem(items, 8, Material.GRAY_WOOL, "회색 양털: 1000"));
+                vault_block.setItem(9, SetItem(items, 9, Material.CYAN_WOOL, "읭: 1000"));
+                vault_block.setItem(10, SetItem(items, 10, Material.BROWN_WOOL, "갈색 양털: 1000"));
+                vault_block.setItem(11, SetItem(items, 11, Material.GREEN_WOOL, "초록색 양털: 1000"));
+                vault_block.setItem(12, SetItem(items, 12, Material.RED_WOOL, "빨간색 양털: 1000"));
+                vault_block.setItem(13, SetItem(items, 13, Material.LIME_WOOL, "라임색 양털: 1000"));
+                vault_block.setItem(14, SetItem(items, 14, Material.STONE_BRICK_SLAB, "돌 반블록: 500"));
+                vault_block.setItem(15, SetItem(items, 15, Material.BRICK_SLAB, "벽돌 반블록: 1000"));
+                vault_block.setItem(16, SetItem(items, 16, Material.NETHER_BRICK_SLAB, "네더 벽돌 반블록: 3000"));
+                vault_block.setItem(17, SetItem(items, 17, Material.QUARTZ_SLAB, "읭 반블록: 5000"));
+                vault_block.setItem(18, SetItem(items, 18, Material.BRICKS, "벽돌: 5000"));
+                vault_block.setItem(19, SetItem(items, 19, Material.CLAY, "점토: 1000"));
+                vault_block.setItem(20, SetItem(items, 20, Material.GLOWSTONE, "발광석: 5000"));
+                vault_block.setItem(21, SetItem(items, 21, Material.JACK_O_LANTERN, "잭-오 랜턴: 7000"));
+                vault_block.setItem(22, SetItem(items, 22, Material.GLASS_PANE, "유리판: 1500"));
+                player.openInventory(vault_block);
+                e.setCancelled(true);
+            }
+        } else return;
+
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {

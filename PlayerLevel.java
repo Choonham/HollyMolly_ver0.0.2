@@ -17,18 +17,17 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
+import javax.annotation.Nullable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
+
 //HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
 public class PlayerLevel implements Listener {
-	Player p;
+	static Player p;
 	PlayerLogin login = new PlayerLogin();
 	public HashMap<Player, ItemStack[]> items = new HashMap<>();
-	Random rand = new Random();
+	public Random rand = new Random();
 	ArrayList<Object> GetKillerInfo = new ArrayList<Object>();
 	ArrayList<Object> GetKilledInfo = new ArrayList<Object>();
 	public static boolean isHome = true;
@@ -116,16 +115,30 @@ public class PlayerLevel implements Listener {
 		int EXP, LV, MONEY = 0;
 		Connect_DB connect = new Connect_DB();
 		ArrayList<Object> GetUserInfo = new ArrayList<Object>();
-		Material[] Give15List = {Material.GLASS, Material.SANDSTONE, Material.WHITE_WOOL, Material.BLACK_WOOL, Material.BLUE_WOOL,
+		Material[] Give50List = {Material.GLASS, Material.SANDSTONE, Material.WHITE_WOOL, Material.BLACK_WOOL, Material.BLUE_WOOL,
 				Material.BROWN_WOOL, Material.CYAN_WOOL, Material.GRAY_WOOL, Material.GREEN_WOOL,
 				Material.LIGHT_BLUE_WOOL, Material.LIGHT_GRAY_WOOL, Material.LIME_WOOL, Material.MAGENTA_WOOL,
 				Material.ORANGE_WOOL, Material.PINK_WOOL, Material.PURPLE_WOOL, Material.RED_WOOL, Material.YELLOW_WOOL};
-		Material[] Give30List = {Material.BRICKS, Material.BRICK_SLAB, Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.GLOWSTONE};
-		Material[] Give50List = {Material.DIAMOND_BLOCK};
+		Material[] Give100List = {Material.BRICKS, Material.BRICK_SLAB, Material.IRON_BLOCK, Material.GOLD_BLOCK, Material.GLOWSTONE,
+				Material.BLACK_CONCRETE, Material.CYAN_CONCRETE, Material.BLUE_CONCRETE, Material.BROWN_CONCRETE, Material.GRAY_CONCRETE,
+				Material.GREEN_CONCRETE, Material.LIGHT_BLUE_CONCRETE, Material.LIGHT_GRAY_CONCRETE, Material.LIME_CONCRETE, Material.MAGENTA_CONCRETE,
+				Material.ORANGE_CONCRETE, Material.PINK_CONCRETE, Material.PURPLE_CONCRETE, Material.RED_CONCRETE, Material.WHITE_CONCRETE,
+				Material.YELLOW_CONCRETE, Material.PURPUR_BLOCK, Material.PURPUR_PILLAR, Material.PURPUR_SLAB, Material.PURPUR_STAIRS};
+		Material[] Give150List = {Material.DIAMOND_BLOCK, Material.TNT, Material.OBSIDIAN, Material.EMERALD_BLOCK, Material.QUARTZ_BLOCK,
+				Material.PRISMARINE, Material.PRISMARINE_BRICKS, Material.TERRACOTTA, Material.BLACK_GLAZED_TERRACOTTA, Material.BLACK_TERRACOTTA,
+				Material.BLUE_GLAZED_TERRACOTTA, Material.BLUE_TERRACOTTA, Material.BROWN_GLAZED_TERRACOTTA, Material.BROWN_TERRACOTTA, Material.CYAN_GLAZED_TERRACOTTA,
+				Material.CYAN_TERRACOTTA, Material.GRAY_GLAZED_TERRACOTTA, Material.GRAY_TERRACOTTA, Material.GREEN_GLAZED_TERRACOTTA,
+				Material.GREEN_TERRACOTTA, Material.LIGHT_BLUE_GLAZED_TERRACOTTA, Material.LIGHT_BLUE_TERRACOTTA, Material.LIGHT_GRAY_GLAZED_TERRACOTTA,
+				Material.LIGHT_GRAY_TERRACOTTA, Material.LIME_GLAZED_TERRACOTTA, Material.LIME_TERRACOTTA, Material.MAGENTA_GLAZED_TERRACOTTA,
+				Material.MAGENTA_TERRACOTTA, Material.ORANGE_GLAZED_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.PINK_GLAZED_TERRACOTTA,
+				Material.PINK_TERRACOTTA, Material.PURPLE_GLAZED_TERRACOTTA, Material.PURPLE_TERRACOTTA, Material.RED_GLAZED_TERRACOTTA,
+				Material.RED_TERRACOTTA, Material.WHITE_GLAZED_TERRACOTTA, Material.WHITE_TERRACOTTA, Material.YELLOW_GLAZED_TERRACOTTA,
+				Material.YELLOW_TERRACOTTA};
+
 		
-		ArrayList<Material> Give15s = new ArrayList<Material>(Arrays.asList(Give15List));
-		ArrayList<Material> Give30s = new ArrayList<Material>(Arrays.asList(Give30List));
 		ArrayList<Material> Give50s = new ArrayList<Material>(Arrays.asList(Give50List));
+		ArrayList<Material> Give10s = new ArrayList<Material>(Arrays.asList(Give100List));
+		ArrayList<Material> Give150s = new ArrayList<Material>(Arrays.asList(Give150List));
 
 		String ID = p.getName();
 		GetUserInfo = this.GetUserInfo(ID);
@@ -136,26 +149,26 @@ public class PlayerLevel implements Listener {
 		Block block = e.getBlock();
 		Material getMat = block.getType();
 
-		boolean hasGive15s = Give15s.stream().anyMatch(s ->  s == getMat);
-		boolean hasGive30s = Give30s.stream().anyMatch(s ->  s == getMat);
-		boolean hasGive50s = Give50s.stream().anyMatch(s ->  s == getMat);
+		boolean hasGive15s = Give50s.stream().anyMatch(s ->  s == getMat);
+		boolean hasGive30s = Give10s.stream().anyMatch(s ->  s == getMat);
+		boolean hasGive50s = Give150s.stream().anyMatch(s ->  s == getMat);
 		if(isHome) {
 			if (hasGive15s) {
-				if(Class.equals("Arc")) EXP = EXP + 10000000;
-				else EXP = EXP + 10000000;
-				MONEY = MONEY + 1000;
-			} else if(hasGive30s) {
 				if(Class.equals("Arc")) EXP = EXP + 100;
-				else EXP = EXP + 50;
+				else EXP = EXP + 500000;
+				MONEY = MONEY + 700;
+			} else if(hasGive30s) {
+				if(Class.equals("Arc")) EXP = EXP + 200;
+				else EXP = EXP + 100;
 				MONEY = MONEY + 1000;
 			} else if(hasGive50s) {
-				if(Class.equals("Arc")) EXP = EXP + 100;
-				else EXP = EXP + 50;
-				MONEY = MONEY + 1000;
+				if(Class.equals("Arc")) EXP = EXP + 300;
+				else EXP = EXP + 150;
+				MONEY = MONEY + 1500;
 			} else {
-				if(Class.equals("Arc")) EXP = EXP + 100;
-				else EXP = EXP + 50;
-				MONEY = MONEY + 1000;
+				if(Class.equals("Arc")) EXP = EXP + 50;
+				else EXP = EXP + 25;
+				MONEY = MONEY + 500;
 			}
 		}
 		
@@ -187,53 +200,104 @@ public class PlayerLevel implements Listener {
 		int EXP, LV, MONEY = 0;
 		ArrayList<Object> GetUserInfo = new ArrayList<Object>();
 		LivingEntity entity = e.getEntity();
-		p = entity.getKiller();
-		ID = (String)p.getName();
-		GetUserInfo = this.GetUserInfo(ID);
-		EXP = (int) GetUserInfo.get(2);
-		LV = (int) GetUserInfo.get(1);
-		String Class = (String) GetUserInfo.get(3);
-		MONEY = (int) GetUserInfo.get(7);
+		if(entity.getKiller()!=null) {
+			p = entity.getKiller();
+			ID = (String) p.getName();
+			GetUserInfo = this.GetUserInfo(ID);
+			EXP = (int) GetUserInfo.get(2);
+			LV = (int) GetUserInfo.get(1);
+			String Class = (String) GetUserInfo.get(3);
+			MONEY = (int) GetUserInfo.get(7);
+			int randInt = rand.nextInt(40);
 
-		if(entity.getType()==EntityType.ZOMBIE){
-			if(Class.equals("hunter"))EXP = EXP + 500;
-			else EXP = EXP + 300;
-			MONEY = MONEY + 1000;
-		} else if(entity.getType()==EntityType.SKELETON){
-			if(Class.equals("hunter"))EXP = EXP + 700;
-			else EXP = EXP + 300;
-			MONEY = MONEY + 1000;
-		} else if(entity.getType()==EntityType.ENDERMAN){
-			if(Class.equals("hunter"))EXP = EXP + 1000;
-			else EXP = EXP + 300;
-			MONEY = MONEY + 1000;
-		} else if(entity.getType()==EntityType.CREEPER){
-			if(Class.equals("hunter"))EXP = EXP + 1300;
-			else EXP = EXP + 300;
-			MONEY = MONEY + 1000;
-		} else {
-			if(Class.equals("hunter"))EXP = EXP + 500;
-			else EXP = EXP + 300;
-			MONEY = MONEY + 1000;
+			if (entity.getType() == EntityType.ZOMBIE) {
+				if (Class.equals("hunter")) EXP = EXP + (125*LV*2);
+				else EXP = EXP + (125*LV);
+				MONEY = MONEY + (143*randInt);
+			} else if (entity.getType() == EntityType.SLIME) {
+				if (Class.equals("hunter")) EXP = EXP + (132*LV*2);
+				else EXP = EXP + (132*LV);
+				MONEY = MONEY + (139*randInt);
+			} else if (entity.getType() == EntityType.SKELETON) {
+				if (Class.equals("hunter")) EXP = EXP + (169*LV*2);
+				else EXP = EXP + (169*LV);
+				MONEY = MONEY + (178*randInt);
+			} else if (entity.getType() == EntityType.SPIDER) {
+				if (Class.equals("hunter")) EXP = EXP + (197*LV*2);
+				else EXP = EXP + (197*LV);
+				MONEY = MONEY + (186*randInt);
+			} else if (entity.getType() == EntityType.ENDERMAN) {
+				if (Class.equals("hunter")) EXP = EXP + (300*LV*2);
+				else EXP = EXP + (300*LV);
+				MONEY = MONEY + (194*randInt);
+			} else if (entity.getType() == EntityType.CREEPER) {
+				if (Class.equals("hunter")) EXP = EXP + (258*LV*2);
+				else EXP = EXP + (258*LV);
+				MONEY = MONEY + (254*randInt);
+			} else if (entity.getType() == EntityType.CAVE_SPIDER) {
+				if (Class.equals("hunter")) EXP = EXP + (335*LV*2);
+				else EXP = EXP + (335*LV);
+				MONEY = MONEY + (395*randInt);
+			} else if (entity.getType() == EntityType.WITCH) {
+				if (Class.equals("hunter")) EXP = EXP + (378*LV*2);
+				else EXP = EXP + (378*LV);
+				MONEY = MONEY + (429*randInt);
+			} else if (entity.getType() == EntityType.PIG_ZOMBIE) {
+				if (Class.equals("hunter")) EXP = EXP + (289*LV*2);
+				else EXP = EXP + (289*LV);
+				MONEY = MONEY + (301*randInt);
+			} else if (entity.getType() == EntityType.BLAZE) {
+				if (Class.equals("hunter")) EXP = EXP + (342*LV*2);
+				else EXP = EXP + (342*LV);
+				MONEY = MONEY + (321*randInt);
+			} else if (entity.getType() == EntityType.SPIDER) {
+				if (Class.equals("hunter")) EXP = EXP + (197*LV*2);
+				else EXP = EXP + (197*LV);
+				MONEY = MONEY + (186*randInt);
+			} else if (entity.getType() == EntityType.GHAST) {
+				if (Class.equals("hunter")) EXP = EXP + (400*LV*2);
+				else EXP = EXP + (400*LV);
+				MONEY = MONEY + (389*randInt);
+			} else if (entity.getType() == EntityType.WITHER_SKELETON) {
+				if (Class.equals("hunter")) EXP = EXP + (333*LV*2);
+				else EXP = EXP + (333*LV);
+				MONEY = MONEY + (320*randInt);
+			} else if (entity.getType() == EntityType.GUARDIAN) {
+				if (Class.equals("hunter")) EXP = EXP + (401*LV*2);
+				else EXP = EXP + (401*LV);
+				MONEY = MONEY + (322*randInt);
+			} else if (entity.getType() == EntityType.ELDER_GUARDIAN) {
+				if (Class.equals("hunter")) EXP = EXP + (500*LV*2);
+				else EXP = EXP + (500*LV);
+				MONEY = MONEY + (420*randInt);
+			} else if (entity.getType() == EntityType.ENDER_DRAGON) {
+				if (Class.equals("hunter")) EXP = EXP + (13000*LV*2);
+				else EXP = EXP + (13000*LV);
+				MONEY = MONEY + (13000*randInt);
+			} else {
+				if (Class.equals("hunter")) EXP = EXP + (56*LV*2);
+				else EXP = EXP + (56*LV);
+				MONEY = MONEY + 1000;
 			}
 
-		if(EXP >= (LV*(1000)*(LV*0.1))) {
-			LV++;
-			EXP = 0;
-			MONEY = MONEY + 100000;
-		}
-		String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ?, MONEY = ? WHERE ID = ?";
-		try {
-			PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
-			stmt.setInt(1, EXP);
-			stmt.setInt(2, LV);
-			stmt.setInt(3, MONEY);
-			stmt.setString(4, ID);
-			stmt.executeUpdate();
-		}catch(Exception E) {
-			E.printStackTrace();
-		}
-		ShowBoard(p);
+			if (EXP >= (LV * (1000) * (LV * 0.1))) {
+				LV++;
+				EXP = 0;
+				MONEY = MONEY + 100000;
+			}
+			String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ?, MONEY = ? WHERE ID = ?";
+			try {
+				PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
+				stmt.setInt(1, EXP);
+				stmt.setInt(2, LV);
+				stmt.setInt(3, MONEY);
+				stmt.setString(4, ID);
+				stmt.executeUpdate();
+			} catch (Exception E) {
+				E.printStackTrace();
+			}
+			ShowBoard(p);
+		} else return;
 	}
 
 	public void ShowBoard(Player p) {

@@ -1,8 +1,10 @@
 package com.jun.hollymolly;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -25,6 +27,7 @@ public class Main extends JavaPlugin{
 		this.getServer().getPluginManager().registerEvents(new Skills(), this);
 		this.getServer().getPluginManager().registerEvents(new Shop(), this);
 		this.getServer().getPluginManager().registerEvents(new Properties(), this);
+		this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
 
 		EntityLabel();
 	}

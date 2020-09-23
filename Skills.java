@@ -1,9 +1,11 @@
 package com.jun.hollymolly;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,10 +14,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.projectiles.BlockProjectileSource;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 //HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
 public class Skills implements Listener {
     PlayerLevel PL = new PlayerLevel();
@@ -43,10 +48,19 @@ public class Skills implements Listener {
         String ID = p.getName();
         World currentWorld = p.getWorld();
         Action action = e.getAction();
-
+        NPC NPC = new NPC();
         GetPlayerInfo = PL.GetUserInfo(ID);
         int LV = (int) GetPlayerInfo.get(1);
         String Class = (String) GetPlayerInfo.get(3);
+        /*
+        if ((p.getLocation().getBlockX() < 105) && (p.getLocation().getBlockX() > -185)) {
+            if ((p.getLocation().getBlockZ() < 131) && (p.getLocation().getBlockZ() > -251)) {
+                p.sendMessage(ChatColor.RED +"Public property에서는 스킬 사용이 불가능합니다.");
+                return;
+            }
+        }
+
+         */
         //************각 직업별 10랩 스킬
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
                 && (p.getItemInHand().getType().equals(Material.COAL))){
@@ -137,10 +151,39 @@ public class Skills implements Listener {
 
             }
             if(Class.equals("hunter")&& LV >= 20) {
-
+                if((hunterSkill2CoolTime.containsKey(p.getName()))){
+                    if(hunterSkill2CoolTime.get(p.getName())>System.currentTimeMillis()) {
+                        long timeleft = (hunterSkill2CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
+                        p.sendMessage("cooldown left: " + timeleft);
+                        return;
+                    }
+                }
+                hunterSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (3*1000));
+                int X = p.getLocation().getBlockX();
+                int Y = p.getLocation().getBlockY();
+                int Z = p.getLocation().getBlockZ();
+                List<Location> LocAvobeList = new ArrayList<Location>();
+                Location playerLoc = new Location(p.getWorld(), X, Y+1, Z);
+                Block b = p.getTargetBlock(null, 10);
+                Location bloc = b.getLocation();
+                Vector v = bloc.toVector().subtract(playerLoc.toVector());
+                //playerLoc.setPitch(playerLoc.getPitch() + PL.rand.nextInt(10));
+                for(int i = 0; i <= 12; i++) {
+                    playerLoc.getWorld().spawnArrow(playerLoc, v, (float) 5, (float) i);
+                }
             }
             if(Class.equals("predator")&& LV >= 20) {
-
+                if(predatorSkill2CoolTime.containsKey(p.getName())){
+                    if(predatorSkill2CoolTime.get(p.getName())>System.currentTimeMillis()) {
+                        long timeleft = (predatorSkill2CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
+                        p.sendMessage("cooldown left: " + timeleft);
+                        return;
+                    }
+                }
+                predatorSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (30*1000));
+                NPC.createNPC(p);
+                predatorSkill1CoolTime.clear();
+                FlashSkill3CoolTime.clear();
             }
         }
         //************각 직업별 20랩 스킬
@@ -169,9 +212,6 @@ public class Skills implements Listener {
                     }
                     w5.setType(Material.AIR);
                 }
-
-
-
             }
         }
         //************Flash********//

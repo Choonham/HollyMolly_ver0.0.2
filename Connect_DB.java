@@ -26,7 +26,7 @@ public class Connect_DB {
             e.printStackTrace();
         } 
         try {
-        	this.connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password);
+        	this.connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?useSSL=false", this.username, this.password);
         }
         catch (SQLException e) {
         	e.printStackTrace();

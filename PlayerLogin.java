@@ -43,8 +43,15 @@ public class PlayerLogin implements CommandExecutor, Listener {
 						ResultSet rs = stmt.executeQuery();
 						if (rs.next()) {
 							if (rs.getString(1).equals(Password)) {
-								player.sendMessage(ID + "로그인");
 								isLoginList.add(ID);
+								player.sendMessage(ChatColor.AQUA + player.getName() + ChatColor.DARK_GREEN + "님, 어서오세요.");
+								player.sendMessage(  "***************명령어***************");
+								player.sendMessage("회원가입: /join password password class(Arc, predator, hunter)");
+								player.sendMessage("로그인: /login ID password");
+								player.sendMessage("회원 탈퇴(데이터 복구 불가능): /imout password password");
+								player.sendMessage("토지 구매(5개 한정): /myblocks 정수 <서있는 곳 기준으로 정사각형 생김(ex: 3 --> 7x7의 사각형 토지 매입)>");
+								player.sendMessage("소유 토지 확인: /check");
+								player.sendMessage("소유 토지 매입: /rm X2좌표");
 								Levelboard.ShowBoard(player);
 							} else player.sendMessage("아이디, 비밀번호를 확인해주세요.");
 						}
@@ -61,7 +68,9 @@ public class PlayerLogin implements CommandExecutor, Listener {
 		Player player = e.getPlayer();
 		if (!isLoginList.contains(player.getName())) {
 			e.setCancelled(true);
-			player.sendMessage("로그인이 필요합니다.");
+			player.sendMessage(ChatColor.RED +"로그인이 필요합니다.");
+			player.sendMessage("회원가입: /join password password class(Arc, predator, hunter)");
+			player.sendMessage("로그인: /login ID password");
 		}
 	}
 
