@@ -18,7 +18,7 @@ public class Main extends JavaPlugin{
 		getCommand("join").setExecutor(new PlayerJoin());
 		getCommand("login").setExecutor(new PlayerLogin());
 		getCommand("ImOut").setExecutor(new PlayerWithdraw());
-		getCommand("shop").setExecutor(new Shop());
+		getCommand("exchange").setExecutor(new Shop());
 		getCommand("myblocks").setExecutor(new Properties());
 		getCommand("check").setExecutor((new Properties()));
 		getCommand("rm").setExecutor((new Properties()));

@@ -155,7 +155,7 @@ public class PlayerLevel implements Listener {
 		boolean hasGive50s = Give150s.stream().anyMatch(s ->  s == getMat);
 		if(isHome) {
 			if (hasGive15s) {
-				if(Class.equals("Arc")) EXP = EXP + 100;
+				if(Class.equals("Arc")) EXP = EXP + 500000;
 				else EXP = EXP + 500000;
 				MONEY = MONEY + 700;
 			} else if(hasGive30s) {

@@ -1,9 +1,6 @@
 package com.jun.hollymolly;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Fireball;
@@ -11,7 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.BlockProjectileSource;
@@ -40,7 +42,45 @@ public class Skills implements Listener {
 
     HashMap<String, Long> FlashSkill3CoolTime = new HashMap<String, Long>();
 
+    @EventHandler
+    public void PlayerGetRequirments(PlayerBedEnterEvent e){
+        Player player = (Player) e.getPlayer();
+        if(player==null){return;}
+        String ID = player.getName();
+        GetPlayerInfo = PL.GetUserInfo(ID);
+        int LV = (int) GetPlayerInfo.get(1);
+        Inventory inventory = player.getInventory();
+        ItemStack requirment10 = new ItemStack(Material.COAL);
+        ItemStack requirment20 = new ItemStack(Material.SUNFLOWER);
+        ItemStack requirment30 = new ItemStack(Material.LILAC);
+        if(LV<10) return;
+        if(LV>=10) {
+            ItemMeta requirment10Meta = requirment10.getItemMeta();
+            requirment10Meta.setDisplayName("10랩 스킬");
+            requirment10.setItemMeta(requirment10Meta);
+            if(!inventory.contains(requirment10)){
+                inventory.addItem(requirment10);
+            }
+        }
+        if(LV>=20){
+            ItemMeta requirment20Meta = requirment20.getItemMeta();
+            requirment20Meta.setDisplayName("20랩 스킬");
+            requirment20.setItemMeta(requirment20Meta);
+            if(!inventory.contains(requirment20)){
+                inventory.addItem(requirment20);
+            }
+        }
+        if(LV>=30){
+            ItemMeta requirment30Meta = requirment30.getItemMeta();
+            requirment30Meta.setDisplayName("30랩 스킬");
+            requirment30.setItemMeta(requirment30Meta);
+            if(!inventory.contains(requirment30)){
+                inventory.addItem(requirment30);
+            }
+        }
 
+
+    }
     @SuppressWarnings("deprecation")
     @EventHandler
     public void PlayerSkill(PlayerInteractEvent e) {
@@ -63,7 +103,7 @@ public class Skills implements Listener {
          */
         //************각 직업별 10랩 스킬
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
-                && (p.getItemInHand().getType().equals(Material.COAL))){
+                && (p.getItemInHand().getType().equals(Material.COAL)) && (p.getItemInHand().getItemMeta().getDisplayName().equals("10랩 스킬"))){
             if(Class.equals("Arc") && LV > 9){
                 if(ArcSkill1CoolTime.containsKey(p.getName())){
                     if(ArcSkill1CoolTime.get(p.getName())>System.currentTimeMillis()) {
@@ -117,7 +157,7 @@ public class Skills implements Listener {
 
         //************각 직업별 20랩 스킬
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
-                && (p.getItemInHand().getType().equals(Material.SUNFLOWER))) {
+                && (p.getItemInHand().getType().equals(Material.SUNFLOWER))&& (p.getItemInHand().getItemMeta().getDisplayName().equals("20랩 스킬"))) {
             if(Class.equals("Arc")&& LV >= 20) {
                 if(ArcSkill2CoolTime.containsKey(p.getName())){
                     if(ArcSkill2CoolTime.get(p.getName())>System.currentTimeMillis()) {
@@ -188,7 +228,50 @@ public class Skills implements Listener {
         }
         //************각 직업별 20랩 스킬
 
-        //************Cancel Action********//
+        if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
+                && (p.getItemInHand().getType().equals(Material.LILAC))&& (p.getItemInHand().getItemMeta().getDisplayName().equals("30랩 스킬"))) {
+            if(Class.equals("Arc")&& LV >= 30){
+                if(ArcSkill3CoolTime.containsKey(p.getName())){
+                    if(ArcSkill3CoolTime.get(p.getName())>System.currentTimeMillis()) {
+                        long timeleft = (ArcSkill3CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
+                        p.sendMessage("cooldown left: " + timeleft);
+                        return;
+                    }
+                }
+                ArcSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (5*1000));
+                Block b = p.getTargetBlock(null,10);
+                int x = b.getX();
+                int y = b.getY();
+                int z = b.getZ();
+                Block w1 = currentWorld.getBlockAt(x,y,z);
+                Block w2 = currentWorld.getBlockAt(x,y-1,z);
+                w1.setType(Material.TNT);
+                w2.setType(Material.REDSTONE_BLOCK);
+
+            }
+            if(Class.equals("predator")&& LV >= 30){
+                for(Player player: Bukkit.getOnlinePlayers()){
+                    if(predatorSkill3CoolTime.containsKey(p.getName())){
+                        if(predatorSkill3CoolTime.get(p.getName())>System.currentTimeMillis()) {
+                            long timeleft = (predatorSkill3CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
+                            p.sendMessage("cooldown left: " + timeleft);
+                            return;
+                        }
+                    }
+                    predatorSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
+                    int i = 1;
+                    p.sendMessage(i+"번: " + player.getName() + ", 위치: X: " + player.getLocation().getBlockX()
+                            + ", Y: " + player.getLocation().getBlockY() + ", Z: " + player.getLocation().getBlockZ());
+                    i++;
+                }
+            }
+            if(Class.equals("hunter")&& LV >= 30){
+
+            }
+
+        }
+
+            //************Cancel Action********//
         if ((action.equals(Action.RIGHT_CLICK_BLOCK)||(action.equals(Action.RIGHT_CLICK_AIR)))
                 && (p.getItemInHand().getType().equals(Material.SUNFLOWER))){
             if(Class.equals("Arc")&& LV >= 20){
