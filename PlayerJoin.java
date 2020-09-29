@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
 public class PlayerJoin implements CommandExecutor, Listener {
 	public int LV = 1;
 	public int EXP = 0; 

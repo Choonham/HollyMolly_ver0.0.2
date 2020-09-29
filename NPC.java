@@ -27,6 +27,9 @@ public class NPC {
         addNPCPacket(npc);
         NPC.add(npc);
     }
+    public static void clearNPC(Player player){
+        NPC.clear();
+    }
     public static void addNPCPacket(EntityPlayer npc){
         for(Player player: Bukkit.getOnlinePlayers()){
             PlayerConnection connection = ((CraftPlayer)player).getHandle().playerConnection;

@@ -4,7 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
 public class PlayerWithdraw implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

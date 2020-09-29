@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Trident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
 public class Skills implements Listener {
     PlayerLevel PL = new PlayerLevel();
     Connect_DB connect = new Connect_DB();
@@ -149,7 +150,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                predatorSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (60*1000));
+                predatorSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (20*1000));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,300,1));
             }
         }
@@ -209,7 +210,7 @@ public class Skills implements Listener {
                 Vector v = bloc.toVector().subtract(playerLoc.toVector());
                 //playerLoc.setPitch(playerLoc.getPitch() + PL.rand.nextInt(10));
                 for(int i = 0; i <= 12; i++) {
-                    playerLoc.getWorld().spawnArrow(playerLoc, v, (float) 5, (float) i);
+                    playerLoc.getWorld().spawnArrow(playerLoc, v, (float) 8, (float) i);
                 }
             }
             if(Class.equals("predator")&& LV >= 20) {
@@ -220,7 +221,8 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                predatorSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (30*1000));
+                NPC.clearNPC(p);
+                predatorSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
                 NPC.createNPC(p);
                 predatorSkill1CoolTime.clear();
                 FlashSkill3CoolTime.clear();
@@ -250,7 +252,6 @@ public class Skills implements Listener {
 
             }
             if(Class.equals("predator")&& LV >= 30){
-                for(Player player: Bukkit.getOnlinePlayers()){
                     if(predatorSkill3CoolTime.containsKey(p.getName())){
                         if(predatorSkill3CoolTime.get(p.getName())>System.currentTimeMillis()) {
                             long timeleft = (predatorSkill3CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
@@ -258,15 +259,25 @@ public class Skills implements Listener {
                             return;
                         }
                     }
-                    predatorSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
+                    predatorSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
+                for(Player player: Bukkit.getOnlinePlayers()) {
                     int i = 1;
-                    p.sendMessage(i+"번: " + player.getName() + ", 위치: X: " + player.getLocation().getBlockX()
+                    p.sendMessage(i + "번: " + player.getName() + ", 위치: X: " + player.getLocation().getBlockX()
                             + ", Y: " + player.getLocation().getBlockY() + ", Z: " + player.getLocation().getBlockZ());
                     i++;
                 }
+
             }
             if(Class.equals("hunter")&& LV >= 30){
-
+                if(hunterSkill3CoolTime.containsKey(p.getName())){
+                    if(hunterSkill3CoolTime.get(p.getName())>System.currentTimeMillis()) {
+                        long timeleft = (hunterSkill3CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
+                        p.sendMessage("cooldown left: " + timeleft);
+                        return;
+                    }
+                }
+                hunterSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (1*1000));
+                p.launchProjectile(Trident.class);
             }
 
         }

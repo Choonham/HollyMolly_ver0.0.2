@@ -23,7 +23,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)jjk
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
 public class Shop implements CommandExecutor, Listener {
     ArrayList<Object> GetUserInfo = new ArrayList<Object>();
     static public Inventory vault_block, vault_block2, vault_block3, vault_block4,

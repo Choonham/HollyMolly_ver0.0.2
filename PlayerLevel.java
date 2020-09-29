@@ -22,7 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
 public class PlayerLevel implements Listener {
 	static Player p;
 	PlayerLogin login = new PlayerLogin();
@@ -44,7 +44,11 @@ public class PlayerLevel implements Listener {
 		Connect_DB connect = new Connect_DB();
 
 		//*********************killer info********************//
+		/*
 		GetKillerInfo = this.GetUserInfo(KillerName);
+		*/
+
+		GetKillerInfo = PlayerLogin.playerInfoMap.get(KillerName);
 		int KillerEXP = (int) GetKillerInfo.get(2);
 		int KillerLV = (int) GetKillerInfo.get(1);
 		String KillerID = (String) GetKillerInfo.get(0);
@@ -52,7 +56,8 @@ public class PlayerLevel implements Listener {
 		int KillerMoney = (int) GetKillerInfo.get(7);
 
 		//*********************getKilled info********************//
-		GetKilledInfo = this.GetUserInfo(getKilledName);
+		//GetKilledInfo = this.GetUserInfo(getKilledName);
+		GetKilledInfo = PlayerLogin.playerInfoMap.get(getKilledName);
 		int KilledEXP = (int) GetKilledInfo.get(2);
 		int KilledLV = (int) GetKilledInfo.get(1);
 		String KilledID = (String) GetKilledInfo.get(0);
@@ -88,7 +93,15 @@ public class PlayerLevel implements Listener {
 			KillerEXP = OverFlowExp;
 			KillerMoney = KillerMoney + 100000;
 		}
-
+		GetKillerInfo.set(1, KillerLV);
+		GetKillerInfo.set(2, KillerEXP);
+		GetKillerInfo.set(7, KillerMoney);
+		GetKilledInfo.set(1, KilledLV);
+		GetKilledInfo.set(2, KilledEXP);
+		GetKilledInfo.set(7, KilledMoney);
+		PlayerLogin.playerInfoMap.replace(KillerName, GetKillerInfo);
+		PlayerLogin.playerInfoMap.replace(getKilledName, GetKilledInfo);
+		/*
 		String GetKilled = "UPDATE PLAYERINFO SET EXP = ?, MONEY = ? WHERE ID = ?";
 		String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ?, MONEY = ? WHERE ID = ?";
 		try {
@@ -106,7 +119,7 @@ public class PlayerLevel implements Listener {
 		}catch(Exception E) {
 			E.printStackTrace();
 		}
-
+		 */
 		ShowBoard(p);
 	}
 
@@ -142,7 +155,8 @@ public class PlayerLevel implements Listener {
 		ArrayList<Material> Give150s = new ArrayList<Material>(Arrays.asList(Give150List));
 
 		String ID = p.getName();
-		GetUserInfo = this.GetUserInfo(ID);
+		//GetUserInfo = this.GetUserInfo(ID);
+		GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
 		EXP = (int) GetUserInfo.get(2);
 		LV = (int) GetUserInfo.get(1);
 		String Class = (String) GetUserInfo.get(3);
@@ -158,6 +172,7 @@ public class PlayerLevel implements Listener {
 				if(Class.equals("Arc")) EXP = EXP + 500000;
 				else EXP = EXP + 500000;
 				MONEY = MONEY + 700;
+				p.sendMessage(Class);
 			} else if(hasGive30s) {
 				if(Class.equals("Arc")) EXP = EXP + 200;
 				else EXP = EXP + 100;
@@ -178,7 +193,12 @@ public class PlayerLevel implements Listener {
 			EXP = 0;
 			MONEY = MONEY + 100000;
 		}
+		GetUserInfo.set(1, LV);
+		GetUserInfo.set(2, EXP);
+		GetUserInfo.set(7, MONEY);
 
+		PlayerLogin.playerInfoMap.replace(ID, GetUserInfo);
+		/*
 		String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ?, MONEY = ? WHERE ID = ?";
 		try {
 			PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
@@ -190,6 +210,7 @@ public class PlayerLevel implements Listener {
 		}catch(Exception E) {
 			E.printStackTrace();
 		}
+		 */
 		ShowBoard(p);
 	}
 
@@ -204,7 +225,8 @@ public class PlayerLevel implements Listener {
 		if(entity.getKiller()!=null) {
 			p = entity.getKiller();
 			ID = (String) p.getName();
-			GetUserInfo = this.GetUserInfo(ID);
+			//GetUserInfo = this.GetUserInfo(ID);
+			GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
 			EXP = (int) GetUserInfo.get(2);
 			LV = (int) GetUserInfo.get(1);
 			String Class = (String) GetUserInfo.get(3);
@@ -286,6 +308,11 @@ public class PlayerLevel implements Listener {
 				EXP = 0;
 				MONEY = MONEY + 100000;
 			}
+			GetUserInfo.set(1,LV);
+			GetUserInfo.set(2,EXP);
+			GetUserInfo.set(7,MONEY);
+			PlayerLogin.playerInfoMap.replace(ID, GetUserInfo);
+			/*
 			String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ?, MONEY = ? WHERE ID = ?";
 			try {
 				PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
@@ -297,6 +324,7 @@ public class PlayerLevel implements Listener {
 			} catch (Exception E) {
 				E.printStackTrace();
 			}
+			 */
 			ShowBoard(p);
 		} else return;
 	}
@@ -306,7 +334,7 @@ public class PlayerLevel implements Listener {
 		PlayerLogin isLogin = new PlayerLogin();
 		ArrayList<Object> Status = new ArrayList<Object>();
 		if(isLogin.isLoginList.contains(p.getName())) {
-			Status = GetUserInfo(ID);
+			Status = PlayerLogin.playerInfoMap.get(ID);
 		}
 		ScoreboardManager manager = Bukkit.getScoreboardManager();
 		Scoreboard scoreboard = manager.getNewScoreboard();

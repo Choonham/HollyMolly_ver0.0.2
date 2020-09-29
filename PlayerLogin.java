@@ -3,6 +3,7 @@ package com.jun.hollymolly;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 //import java.sql.SQLException;
 
@@ -17,7 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.15)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
 public class PlayerLogin implements CommandExecutor, Listener {
 	//public static boolean isLogin = false;
 	public PlayerLogin() {
@@ -25,6 +26,7 @@ public class PlayerLogin implements CommandExecutor, Listener {
 
 	;
 	public static ArrayList<String> isLoginList = new ArrayList<String>();
+	public static HashMap<String, ArrayList<Object>> playerInfoMap = new HashMap<>();
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -37,6 +39,7 @@ public class PlayerLogin implements CommandExecutor, Listener {
 					String ID = args[0];
 					String Password = args[1];
 					String LoginProcess = "SELECT passwords	 FROM PLAYERLOGININFO WHERE ID= ?";
+					String getPlayerInfo = "SELECT * FROM PLAYERINFO WHERE ID = ?";
 					try {
 						PreparedStatement stmt = connect.connection.prepareStatement(LoginProcess);
 						stmt.setString(1, ID);
@@ -44,6 +47,34 @@ public class PlayerLogin implements CommandExecutor, Listener {
 						if (rs.next()) {
 							if (rs.getString(1).equals(Password)) {
 								isLoginList.add(ID);
+								ArrayList<Object> UserInfoList = new ArrayList<Object>();
+								try {
+									PreparedStatement getInfoStmt = connect.connection.prepareStatement(getPlayerInfo);
+									getInfoStmt.setString(1, ID);
+									ResultSet RS = getInfoStmt.executeQuery();
+									while(RS.next()){
+										String LoginedID =RS.getString("ID");
+										int LoginedLV = RS.getInt("Lv");
+										int LoginedEXP = RS.getInt("exp");
+										String LoginedClass = RS.getString("class");
+										float LoginedHomeX = RS.getFloat("homelocx");
+										float LoginedHomeY = RS.getFloat("homelocy");
+										float LoginedHomeZ = RS.getFloat("homelocz");
+										int LoginedMoney = RS.getInt("Money");
+										UserInfoList.add(0,LoginedID);
+										UserInfoList.add(1,LoginedLV);
+										UserInfoList.add(2,LoginedEXP);
+										UserInfoList.add(3,LoginedClass);
+										UserInfoList.add(4,LoginedHomeX);
+										UserInfoList.add(5,LoginedHomeY);
+										UserInfoList.add(6,LoginedHomeZ);
+										UserInfoList.add(7, LoginedMoney);
+										playerInfoMap.put(LoginedID, UserInfoList);
+									}
+								} catch (Exception e){
+									e.printStackTrace();
+									player.sendMessage("데이터베이스 오류: 관리자에게 문의하세요.");
+								}
 								player.sendMessage(ChatColor.AQUA + player.getName() + ChatColor.DARK_GREEN + "님, 어서오세요.");
 								player.sendMessage(  "***************명령어***************");
 								player.sendMessage("회원가입: /join password password class(Arc, predator, hunter)");
@@ -78,8 +109,22 @@ public class PlayerLogin implements CommandExecutor, Listener {
 	public void onLogout(PlayerQuitEvent e){
 		Player player = e.getPlayer();
 		String ID = player.getName();
+		Connect_DB connect = new Connect_DB();
+		ArrayList<Object> UpdateList = new ArrayList<Object>();
+		UpdateList = playerInfoMap.get(ID);
 		if(isLoginList.contains(ID)){
 			isLoginList.remove(ID);
+		}
+		String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ?, MONEY = ? WHERE ID = ?";
+		try {
+			PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
+			stmt.setInt(1, (int)UpdateList.get(1));
+			stmt.setInt(2, (int)UpdateList.get(2));
+			stmt.setInt(3, (int)UpdateList.get(7));
+			stmt.setString(4, (String)UpdateList.get(0));
+			stmt.executeUpdate();
+		} catch (Exception E) {
+			E.printStackTrace();
 		}
 	}
 }
