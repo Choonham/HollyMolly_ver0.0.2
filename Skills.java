@@ -2,13 +2,12 @@ package com.jun.hollymolly;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Trident;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -42,13 +41,14 @@ public class Skills implements Listener {
     HashMap<String, Long> hunterSkill3CoolTime = new HashMap<String, Long>();
 
     HashMap<String, Long> FlashSkill3CoolTime = new HashMap<String, Long>();
+    static boolean isCool = false;
 
     @EventHandler
     public void PlayerGetRequirments(PlayerBedEnterEvent e){
         Player player = (Player) e.getPlayer();
         if(player==null){return;}
         String ID = player.getName();
-        GetPlayerInfo = PL.GetUserInfo(ID);
+        GetPlayerInfo = PlayerLogin.playerInfoMap.get(ID);
         int LV = (int) GetPlayerInfo.get(1);
         Inventory inventory = player.getInventory();
         ItemStack requirment10 = new ItemStack(Material.COAL);
@@ -90,7 +90,7 @@ public class Skills implements Listener {
         World currentWorld = p.getWorld();
         Action action = e.getAction();
         NPC NPC = new NPC();
-        GetPlayerInfo = PL.GetUserInfo(ID);
+        GetPlayerInfo = PlayerLogin.playerInfoMap.get(ID);
         int LV = (int) GetPlayerInfo.get(1);
         String Class = (String) GetPlayerInfo.get(3);
         /*
@@ -273,11 +273,13 @@ public class Skills implements Listener {
                     if(hunterSkill3CoolTime.get(p.getName())>System.currentTimeMillis()) {
                         long timeleft = (hunterSkill3CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
                         p.sendMessage("cooldown left: " + timeleft);
+                        isCool = true;
                         return;
                     }
                 }
                 hunterSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (1*1000));
                 p.launchProjectile(Trident.class);
+                isCool = false;
             }
 
         }
@@ -377,7 +379,18 @@ public class Skills implements Listener {
             }
             }
         }
-
+    @EventHandler
+    public void ProjectileHit(EntityDamageByEntityEvent e){
+        if (e.getDamager() instanceof Trident) {
+            Trident sn = (Trident)e.getDamager();
+            if (sn.getShooter() instanceof Player) {
+                if(!isCool){
+                    Entity getHit = (Entity)e.getEntity();
+                    getHit.setFireTicks(1000);
+                }
+            }
+        }
+    }
     public String rpGetPlayerDirection(Player playerSelf) {
         String dir = "";
         float y = playerSelf.getLocation().getYaw();
