@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +28,7 @@ public class Properties implements Listener, CommandExecutor {
     ArrayList<Integer> Z2 = new ArrayList<Integer>();
     ArrayList<String> who = new ArrayList<String>();
 
+    public static ArrayList<ArrayList<?>> onID = new ArrayList<>();
     public Properties() {
     }
 
@@ -36,8 +38,8 @@ public class Properties implements Listener, CommandExecutor {
         String ID = p.getName();
         Location PlayerLoc = p.getLocation();
         Location BlockLoc = e.getBlock().getLocation();
-        ArrayList<ArrayList<?>> onID = new ArrayList<>();
-        onID = getProperty();
+
+        //onID = getProperty();
         PlayerLevel PL = new PlayerLevel();
         who = (ArrayList<String>)onID.get(0);
         X1 = (ArrayList<Integer>)onID.get(1);
@@ -73,8 +75,8 @@ public class Properties implements Listener, CommandExecutor {
         String ID = p.getName();
         Location PlayerLoc = p.getLocation();
         Location BlockLoc = e.getBlock().getLocation();
-        ArrayList<ArrayList<?>> onID = new ArrayList<>();
-        onID = getProperty();
+        //ArrayList<ArrayList<?>> onID = new ArrayList<>();
+        //onID = getProperty();
         PlayerLevel PL = new PlayerLevel();
         who = (ArrayList<String>)onID.get(0);
         X1 = (ArrayList<Integer>)onID.get(1);
@@ -161,6 +163,7 @@ public class Properties implements Listener, CommandExecutor {
                             } catch (Exception E) {
                                 E.printStackTrace();
                             }
+                            onID = getProperty();
                             PL.ShowBoard(player);
                         } else {
                             player.sendMessage("You don't have enough money for this.");
@@ -207,6 +210,7 @@ public class Properties implements Listener, CommandExecutor {
                     } catch (Exception e){
                         e.printStackTrace();
                     }
+                    onID = getProperty();
                     PL.ShowBoard(player);
                     player.sendMessage("X 값 : " + x2 + " 의 땅 처분 완료, " + Math.abs(difference) + "만원이 입금되었습니다.");
 
