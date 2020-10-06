@@ -330,7 +330,6 @@ public class Skills implements Listener {
             if(Dir.equals("west")) {
                 Location Flash = new Location(p.getWorld(), pX, pY, pZ + 6, yaw, 1);
                 p.teleport(Flash);
-
             } else if(Dir.equals("west northwest")){
                 Location Flash = new Location(p.getWorld(), pX - 3, pY, pZ + 6, yaw, 1);
                 p.teleport(Flash);
@@ -384,26 +383,29 @@ public class Skills implements Listener {
         if (e.getDamager() instanceof Trident) {
             Trident sn = (Trident)e.getDamager();
             if (sn.getShooter() instanceof Player) {
-                String ID = ((Player) sn.getShooter()).getName();
+                Player p = (Player)sn.getShooter();
+                String ID = p.getName();
                 if(ID == null) return;
                 GetPlayerInfo = PlayerLogin.playerInfoMap.get(ID);
                 if((!isCool)&&(GetPlayerInfo.get(3).equals("hunter"))&&((int)GetPlayerInfo.get(1)>=30)){
+                    if((p.getItemInHand().getType().equals(Material.LILAC))&&(p.getItemInHand().getItemMeta().getDisplayName().equals("30랩 스킬"))){
                     Entity getHit = (Entity)e.getEntity();
                     World world = getHit.getWorld();
                     Location getHitLoc = getHit.getLocation();
                     int x = getHitLoc.getBlockX();
                     int y = getHitLoc.getBlockY();
                     int z = getHitLoc.getBlockZ();
-                    for(int j =0; j < 3; j++){
+                    for(int j =0; j < 3; j++) {
                         world.strikeLightning(new Location(world, x, y, z));
-                        world.strikeLightning(new Location(world, x+j, y, z));
-                        world.strikeLightning(new Location(world, x+j, y, z-j));
-                        world.strikeLightning(new Location(world, x+j, y, z+j));
-                        world.strikeLightning(new Location(world, x, y, z-j));
-                        world.strikeLightning(new Location(world, x, y, z+j));
-                        world.strikeLightning(new Location(world, x-j, y, z));
-                        world.strikeLightning(new Location(world, x-j, y, z+j));
-                        world.strikeLightning(new Location(world, x-j, y, z-j));
+                        world.strikeLightning(new Location(world, x + j, y, z));
+                        world.strikeLightning(new Location(world, x + j, y, z - j));
+                        world.strikeLightning(new Location(world, x + j, y, z + j));
+                        world.strikeLightning(new Location(world, x, y, z - j));
+                        world.strikeLightning(new Location(world, x, y, z + j));
+                        world.strikeLightning(new Location(world, x - j, y, z));
+                        world.strikeLightning(new Location(world, x - j, y, z + j));
+                        world.strikeLightning(new Location(world, x - j, y, z - j));
+                        }
                     }
                 }
             }
