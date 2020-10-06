@@ -172,7 +172,6 @@ public class PlayerLevel implements Listener {
 				if(Class.equals("Arc")) EXP = EXP + 500000;
 				else EXP = EXP + 500000;
 				MONEY = MONEY + 700;
-				p.sendMessage(Class);
 			} else if(hasGive30s) {
 				if(Class.equals("Arc")) EXP = EXP + 200;
 				else EXP = EXP + 100;

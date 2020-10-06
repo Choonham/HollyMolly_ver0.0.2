@@ -32,14 +32,19 @@ public class Skills implements Listener {
     HashMap<String, Long> ArcSkill2CoolTime = new HashMap<String, Long>();
     HashMap<String, Long> ArcSkill3CoolTime = new HashMap<String, Long>();
 
+    HashMap<String, Long> ArcSkill4CoolTime = new HashMap<String, Long>();
+
     HashMap<String, Long> predatorSkill1CoolTime = new HashMap<String, Long>();
     HashMap<String, Long> predatorSkill2CoolTime = new HashMap<String, Long>();
     HashMap<String, Long> predatorSkill3CoolTime = new HashMap<String, Long>();
+
+    HashMap<String, Long> predatorSkill4CoolTime = new HashMap<String, Long>();
 
     HashMap<String, Long> hunterSkill1CoolTime = new HashMap<String, Long>();
     HashMap<String, Long> hunterSkill2CoolTime = new HashMap<String, Long>();
     HashMap<String, Long> hunterSkill3CoolTime = new HashMap<String, Long>();
 
+    HashMap<String, Long> hunterSkill4CoolTime = new HashMap<String, Long>();
     HashMap<String, Long> FlashSkill3CoolTime = new HashMap<String, Long>();
     static boolean isCool = false;
 

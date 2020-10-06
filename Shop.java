@@ -28,7 +28,7 @@ import java.util.Random;
 public class Shop implements CommandExecutor, Listener {
     ArrayList<Object> GetUserInfo = new ArrayList<Object>();
     static public Inventory vault_block, vault_block2, vault_block3, vault_block4,
-            vault_weapons, vault_arm, vault_foods, vault_spawn, vault_potions;
+            vault_weapons, vault_arm, vault_spawn, vault_utils;
     
     static public ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 
@@ -48,8 +48,9 @@ public class Shop implements CommandExecutor, Listener {
             Location Arc4Block = new Location(player.getWorld(), 4, 4, 4);
             Location WeaponsBlock = new Location(player.getWorld(), -188, 83, 132);
             Location ArmBlock = new Location(player.getWorld(), -188, 83, 131);
-            Location FoodsBlock = new Location(player.getWorld(), 7, 7, 7);
-            Location PotionBlock = new Location(player.getWorld(), 8, 8, 8);
+            Location SpawnerBlock = new Location(player.getWorld(), -188, 83, 133);
+            Location UtilsBlock = new Location(player.getWorld(), -188, 83, 134);
+
 
             if (clickedBlockLoc.equals(Arc1Block)) {
                 vault_block = Bukkit.createInventory(player, 36, "Arc1");
@@ -219,6 +220,28 @@ public class Shop implements CommandExecutor, Listener {
                     player.openInventory(vault_arm);
                 //e.setCancelled(true);
             }
+            if (clickedBlockLoc.equals(UtilsBlock)){
+                vault_utils = Bukkit.createInventory(player, 36, "Utils_Shop");
+                vault_utils.setItem(0, SetItem(items, 0, Material.DIAMOND_PICKAXE, "랜덤 인챈트 곡괭이: 100,000"));
+                vault_utils.setItem(1, SetItem(items, 1, Material.DIAMOND_AXE, "랜덤 인챈트 도끼: 100,000"));
+                vault_utils.setItem(2, SetItem(items, 2, Material.DIAMOND_HOE, "랜덤 인챈트 괭이: 100,000"));
+                vault_utils.setItem(3, SetItem(items, 3, Material.DIAMOND_SHOVEL, "랜덤 인챈트 삽: 100,000"));
+                player.openInventory(vault_utils);
+            }
+            if (clickedBlockLoc.equals(SpawnerBlock)){
+                vault_spawn = Bukkit.createInventory(player, 36, "Spawner");
+                vault_spawn.setItem(0, SetItem(items, 0, Material.BLAZE_SPAWN_EGG, "블레이즈 스폰 알: 100,000"));
+                vault_spawn.setItem(1, SetItem(items, 1, Material.CAVE_SPIDER_SPAWN_EGG, "동굴 거미 스폰 알: 90,000"));
+                vault_spawn.setItem(2, SetItem(items, 2, Material.CREEPER_SPAWN_EGG, "크리퍼 스폰 알: 200,000"));
+                vault_spawn.setItem(3, SetItem(items, 3, Material.GHAST_SPAWN_EGG, "가스트 스폰 알: 230,000"));
+                vault_spawn.setItem(4, SetItem(items, 4, Material.PHANTOM_SPAWN_EGG, "팬텀 스폰 알: 150,000"));
+                vault_spawn.setItem(5, SetItem(items, 5, Material.SPIDER_SPAWN_EGG, "거미 스폰 알: 30,000"));
+                vault_spawn.setItem(6, SetItem(items, 6, Material.SKELETON_SPAWN_EGG, "스켈레톤 스폰 알: 50,000"));
+                vault_spawn.setItem(7, SetItem(items, 7, Material.WITCH_SPAWN_EGG, "마녀 스폰 알: 100,000"));
+                vault_spawn.setItem(8, SetItem(items, 8, Material.ZOMBIE_PIGMAN_SPAWN_EGG, "좀비 피그맨 스폰 알: 150,000"));
+                vault_spawn.setItem(9, SetItem(items, 9, Material.ZOMBIE_SPAWN_EGG, "좀비 스폰 알: 30,000"));
+                player.openInventory(vault_spawn);
+            }
 
         } else return;
     }
@@ -278,1035 +301,1451 @@ public class Shop implements CommandExecutor, Listener {
     @EventHandler
     public void OnPlayerClickInventory(InventoryClickEvent e){
         Inventory Clicked = e.getClickedInventory();
-        if(Clicked.equals(null)){return;}
-        if(Clicked.equals(vault_block)){
-            Player player = (Player) e.getWhoClicked();
-            Connect_DB connect = new Connect_DB();
-            PlayerLevel PL = new PlayerLevel();
-            String ID = player.getName();
-            GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
-            int Money = (int)GetUserInfo.get(7);
-            ItemStack Selected = e.getCurrentItem();
-            if(Selected.equals(items.get(0))){
-                if(Money >= 100000){
-                    Money = Money - 100000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(1))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(2))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(3))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(4))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(5))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(6))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(7))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(8))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(9))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(10))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(11))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(12))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(13))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(14))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(15))){
-                if(Money >= 500){
-                    Money = Money - 500;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(16))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(17))){
-                if(Money >= 3000){
-                    Money = Money - 3000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(18))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(19))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                }  else e.setCancelled(true);
-            } else if(Selected.equals(items.get(20))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                }  else e.setCancelled(true);
-            } else if(Selected.equals(items.get(21))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                }  else e.setCancelled(true);
-            } else if(Selected.equals(items.get(22))){
-                if(Money >= 7000){
-                    Money = Money - 7000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                }  else e.setCancelled(true);
-            } else if(Selected.equals(items.get(23))){
-                if(Money >= 1500){
-                    Money = Money - 1500;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                }  else e.setCancelled(true);
-            }
-            UpdateQuery(ID,Money);
-            PL.ShowBoard(player);
-        }
-        if(Clicked.equals(vault_block2)){
-            Player player = (Player) e.getWhoClicked();
-            Connect_DB connect = new Connect_DB();
-            PlayerLevel PL = new PlayerLevel();
-            String ID = player.getName();
-            GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
-            int Money = (int)GetUserInfo.get(7);
-            ItemStack Selected = e.getCurrentItem();
-
-            if((Selected.equals(items.get(0)))||(Selected.equals(items.get(1)))||(Selected.equals(items.get(2)))||
-                    (Selected.equals(items.get(3)))||(Selected.equals(items.get(4)))||(Selected.equals(items.get(5)))||
-                    (Selected.equals(items.get(6)))||(Selected.equals(items.get(7)))||(Selected.equals(items.get(8)))||
-                    (Selected.equals(items.get(9)))||(Selected.equals(items.get(10)))||(Selected.equals(items.get(11)))||
-                    (Selected.equals(items.get(12)))||(Selected.equals(items.get(13)))||(Selected.equals(items.get(14)))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(17)))||(Selected.equals(items.get(18)))||(Selected.equals(items.get(19)))||
-                    (Selected.equals(items.get(20)))||(Selected.equals(items.get(21)))||(Selected.equals(items.get(22)))||
-                    (Selected.equals(items.get(23)))||(Selected.equals(items.get(24)))||(Selected.equals(items.get(25)))||
-                    (Selected.equals(items.get(26)))||(Selected.equals(items.get(27)))||(Selected.equals(items.get(28)))||
-                    (Selected.equals(items.get(29)))||(Selected.equals(items.get(30)))||(Selected.equals(items.get(31)))||
-                    (Selected.equals(items.get(15)))) {
-                if(Money >= 1500){
-                    Money = Money - 1500;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            }
-            UpdateQuery(ID,Money);
-            PL.ShowBoard(player);
-        }
-        if(Clicked.equals(vault_block3)){
-            Player player = (Player) e.getWhoClicked();
-            Connect_DB connect = new Connect_DB();
-            PlayerLevel PL = new PlayerLevel();
-            String ID = player.getName();
-            GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
-            int Money = (int)GetUserInfo.get(7);
-            ItemStack Selected = e.getCurrentItem();
-
-            if((Selected.equals(items.get(0)))||(Selected.equals(items.get(1)))
-                    ||(Selected.equals(items.get(2)))||(Selected.equals(items.get(3)))){
-                if(Money >= 500){
-                    Money = Money - 500;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(4)))||(Selected.equals(items.get(5)))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(6)))){
-                if(Money >= 3000){
-                    Money = Money - 3000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(7)))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(8)))){
-                if(Money >= 5500){
-                    Money = Money - 5500;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(9)))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(10)))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(11)))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(12)))){
-                if(Money >= 3000){
-                    Money = Money - 3000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(13)))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(14)))){
-                if(Money >= 2000){
-                    Money = Money - 2000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(15)))){
-                if(Money >= 2500){
-                    Money = Money - 2500;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(16)))){
-                if(Money >= 2000){
-                    Money = Money - 2000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(17)))||(Selected.equals(items.get(18)))||(Selected.equals(items.get(19)))||
-                    (Selected.equals(items.get(20)))||(Selected.equals(items.get(21)))||(Selected.equals(items.get(22)))||
-                    (Selected.equals(items.get(23)))||(Selected.equals(items.get(24)))||(Selected.equals(items.get(25)))||
-                    (Selected.equals(items.get(26)))||(Selected.equals(items.get(27)))||(Selected.equals(items.get(28)))||
-                    (Selected.equals(items.get(29)))||(Selected.equals(items.get(30)))||(Selected.equals(items.get(31)))||
-                    (Selected.equals(items.get(32)))||(Selected.equals(items.get(33)))||(Selected.equals(items.get(34)))||
-                    (Selected.equals(items.get(35)))) {
-                if(Money >= 10000){
-                    Money = Money - 10000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            }
-            UpdateQuery(ID,Money);
-            PL.ShowBoard(player);
-        }
-        if(Clicked.equals(vault_block4)){
-            Player player = (Player) e.getWhoClicked();
-            Connect_DB connect = new Connect_DB();
-            PlayerLevel PL = new PlayerLevel();
-            String ID = player.getName();
-            GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
-            int Money = (int)GetUserInfo.get(7);
-            ItemStack Selected = e.getCurrentItem();
-
-            if((Selected.equals(items.get(0)))||(Selected.equals(items.get(1)))||(Selected.equals(items.get(2)))||
-                    (Selected.equals(items.get(3)))||(Selected.equals(items.get(4)))||(Selected.equals(items.get(5)))||
-                    (Selected.equals(items.get(6)))||(Selected.equals(items.get(7)))||(Selected.equals(items.get(8)))||
-                    (Selected.equals(items.get(9)))||(Selected.equals(items.get(10)))||(Selected.equals(items.get(11)))||
-                    (Selected.equals(items.get(12)))||(Selected.equals(items.get(13)))||(Selected.equals(items.get(14)))||
-                    (Selected.equals(items.get(15)))){
-                if(Money >= 500){
-                    Money = Money - 500;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if((Selected.equals(items.get(17)))||(Selected.equals(items.get(18)))||(Selected.equals(items.get(19)))||
-                    (Selected.equals(items.get(20)))||(Selected.equals(items.get(21)))||(Selected.equals(items.get(22)))||
-                    (Selected.equals(items.get(23)))||(Selected.equals(items.get(24)))||(Selected.equals(items.get(25)))||
-                    (Selected.equals(items.get(26)))||(Selected.equals(items.get(27)))||(Selected.equals(items.get(28)))||
-                    (Selected.equals(items.get(29)))||(Selected.equals(items.get(30)))||(Selected.equals(items.get(31)))||
-                    (Selected.equals(items.get(16)))) {
-                if(Money >= 2000){
-                    Money = Money - 2000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            }
-            UpdateQuery(ID,Money);
-            PL.ShowBoard(player);
-        }
-        if(Clicked.equals(vault_weapons)) {
-            Player player = (Player) e.getWhoClicked();
-            Connect_DB connect = new Connect_DB();
-            PlayerLevel PL = new PlayerLevel();
-            String ID = player.getName();
-            GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
-            int Money = (int)GetUserInfo.get(7);
-            ItemStack Selected = e.getCurrentItem();
-            if(Selected.equals(items.get(0))){
-                if(Money >= 100000){
-                    Money = Money - 100000;
-                    Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(100);
-                    int RandInt_2 = rand.nextInt(100);
-                    int RandInt_3 = rand.nextInt(100);
-                    int RandInt_4 = rand.nextInt(100);
-                    if(RandInt_1 < 11){
-                        player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
-                        player.setHealth(1);
-                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
-                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 2);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
-                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 4);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 4);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 4);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 4);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
-                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 3);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
-                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 1);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 94 && RandInt_1 <= 99){
-                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 10);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 10);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 10);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 10);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 == 100){
-                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 25);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 25);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 25);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 25);
-                                }
-                            }
-                        }
-                    }else{
-                        player.sendMessage("꽝!");
-                    }
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(1))){
-                if(Money >= 100000){
-                    Money = Money - 100000;
-                    Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(100);
-                    int RandInt_2 = rand.nextInt(100);
-                    int RandInt_3 = rand.nextInt(100);
-                    int RandInt_4 = rand.nextInt(100);
-                    if(RandInt_1 < 11){
-                        player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
-                        player.setHealth(1);
-                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 2);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 4);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 4);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 4);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 4);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 3);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 3);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 3);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 94 && RandInt_1 <= 99){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 10);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 10);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 10);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 10);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 == 100){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 25);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 100);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 25);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 25);
-                                }
-                            }
-                        }
-                    }else{
-                        player.sendMessage("꽝!");
-                    }
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(2))){
-                if(Money >= 200000){
-                    Money = Money - 200000;
-                    Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(100);
-                    int RandInt_2 = rand.nextInt(100);
-                    int RandInt_3 = rand.nextInt(100);
-                    int RandInt_4 = rand.nextInt(100);
-                    int RandInt_5 = rand.nextInt(100);
-                    int RandInt_6 = rand.nextInt(100);
-                    int RandInt_7 = rand.nextInt(100);
-                    if(RandInt_1 < 11){
-                        player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
-                        player.setHealth(1);
-                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
-                                    if(RandInt_5%2 == 0){
-                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 2);
-                                        if(RandInt_6%2 == 0){
-                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 2);
-                                            if(RandInt_7%2 == 0){
-                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 2);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 4);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 4);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 4);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 4);
-                                    if(RandInt_5%2 == 0){
-                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 4);
-                                        if(RandInt_6%2 == 0){
-                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 4);
-                                            if(RandInt_7%2 == 0){
-                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 4);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 3);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 3);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 3);
-                                    if(RandInt_5%2 == 0){
-                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 3);
-                                        if(RandInt_6%2 == 0){
-                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 3);
-                                            if(RandInt_7%2 == 0){
-                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 3);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 1);
-                                    if(RandInt_5%2 == 0){
-                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 1);
-                                        if(RandInt_6%2 == 0){
-                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
-                                            if(RandInt_7%2 == 0){
-                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 94 && RandInt_1 <= 99){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 10);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 10);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 10);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 10);
-                                    if(RandInt_5%2 == 0){
-                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 10);
-                                        if(RandInt_6%2 == 0){
-                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 10);
-                                            if(RandInt_7%2 == 0){
-                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 10);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 == 100){
-                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 25);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 25);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 25);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 25);
-                                    if(RandInt_5%2 == 0){
-                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 25);
-                                        if(RandInt_6%2 == 0){
-                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 25);
-                                            if(RandInt_7%2 == 0){
-                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 25);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }else{
-                        player.sendMessage("꽝!");
-                    }
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(3))){
-                if(Money >= 10000){
-                    Money = Money - 10000;
-                    Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(100);
-                    int i;
-                    for(i = 0; i < RandInt_1; i++){
+        if(Clicked!=null) {
+            if (Clicked.equals(vault_block)) {
+                Player player = (Player) e.getWhoClicked();
+                Connect_DB connect = new Connect_DB();
+                PlayerLevel PL = new PlayerLevel();
+                String ID = player.getName();
+                GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
+                int Money = (int) GetUserInfo.get(7);
+                ItemStack Selected = e.getCurrentItem();
+                if (Selected.equals(items.get(0))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
                         player.getInventory().addItem(Selected);
-                    }
-                    player.sendMessage("화살" + Integer.toString(i) + "개가 지급되었습니다.");
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else e.setCancelled(true);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(1))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(2))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(3))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(4))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(5))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(6))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(7))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(8))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(9))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(10))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(11))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(12))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(13))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(14))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(15))) {
+                    if (Money >= 500) {
+                        Money = Money - 500;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(16))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(17))) {
+                    if (Money >= 3000) {
+                        Money = Money - 3000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(18))) {
+                    if (Money >= 5000) {
+                        Money = Money - 5000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(19))) {
+                    if (Money >= 5000) {
+                        Money = Money - 5000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(20))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(21))) {
+                    if (Money >= 5000) {
+                        Money = Money - 5000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(22))) {
+                    if (Money >= 7000) {
+                        Money = Money - 7000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(23))) {
+                    if (Money >= 1500) {
+                        Money = Money - 1500;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                }
+                UpdateQuery(ID, Money);
+                PL.ShowBoard(player);
+            }
+            if (Clicked.equals(vault_block2)) {
+                Player player = (Player) e.getWhoClicked();
+                Connect_DB connect = new Connect_DB();
+                PlayerLevel PL = new PlayerLevel();
+                String ID = player.getName();
+                GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
+                int Money = (int) GetUserInfo.get(7);
+                ItemStack Selected = e.getCurrentItem();
 
-            UpdateQuery(ID,Money);
-            PL.ShowBoard(player);
-        }
-        if(Clicked.equals(vault_arm)) {
-            Player player = (Player) e.getWhoClicked();
-            Connect_DB connect = new Connect_DB();
-            PlayerLevel PL = new PlayerLevel();
-            String ID = player.getName();
-            GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
-            int Money = (int)GetUserInfo.get(7);
-            ItemStack Selected = e.getCurrentItem();
-            if(Selected.equals(items.get(0))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
+                if ((Selected.equals(items.get(0))) || (Selected.equals(items.get(1))) || (Selected.equals(items.get(2))) ||
+                        (Selected.equals(items.get(3))) || (Selected.equals(items.get(4))) || (Selected.equals(items.get(5))) ||
+                        (Selected.equals(items.get(6))) || (Selected.equals(items.get(7))) || (Selected.equals(items.get(8))) ||
+                        (Selected.equals(items.get(9))) || (Selected.equals(items.get(10))) || (Selected.equals(items.get(11))) ||
+                        (Selected.equals(items.get(12))) || (Selected.equals(items.get(13))) || (Selected.equals(items.get(14)))) {
+                    if (Money >= 5000) {
+                        Money = Money - 5000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(17))) || (Selected.equals(items.get(18))) || (Selected.equals(items.get(19))) ||
+                        (Selected.equals(items.get(20))) || (Selected.equals(items.get(21))) || (Selected.equals(items.get(22))) ||
+                        (Selected.equals(items.get(23))) || (Selected.equals(items.get(24))) || (Selected.equals(items.get(25))) ||
+                        (Selected.equals(items.get(26))) || (Selected.equals(items.get(27))) || (Selected.equals(items.get(28))) ||
+                        (Selected.equals(items.get(29))) || (Selected.equals(items.get(30))) || (Selected.equals(items.get(31))) ||
+                        (Selected.equals(items.get(15)))) {
+                    if (Money >= 1500) {
+                        Money = Money - 1500;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                }
+                UpdateQuery(ID, Money);
+                PL.ShowBoard(player);
+            }
+            if (Clicked.equals(vault_block3)) {
+                Player player = (Player) e.getWhoClicked();
+                Connect_DB connect = new Connect_DB();
+                PlayerLevel PL = new PlayerLevel();
+                String ID = player.getName();
+                GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
+                int Money = (int) GetUserInfo.get(7);
+                ItemStack Selected = e.getCurrentItem();
+
+                if ((Selected.equals(items.get(0))) || (Selected.equals(items.get(1)))
+                        || (Selected.equals(items.get(2))) || (Selected.equals(items.get(3)))) {
+                    if (Money >= 500) {
+                        Money = Money - 500;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(4))) || (Selected.equals(items.get(5)))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(6)))) {
+                    if (Money >= 3000) {
+                        Money = Money - 3000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(7)))) {
+                    if (Money >= 5000) {
+                        Money = Money - 5000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(8)))) {
+                    if (Money >= 5500) {
+                        Money = Money - 5500;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(9)))) {
+                    if (Money >= 5000) {
+                        Money = Money - 5000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(10)))) {
+                    if (Money >= 5000) {
+                        Money = Money - 5000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(11)))) {
+                    if (Money >= 5000) {
+                        Money = Money - 5000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(12)))) {
+                    if (Money >= 3000) {
+                        Money = Money - 3000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(13)))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(14)))) {
+                    if (Money >= 2000) {
+                        Money = Money - 2000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(15)))) {
+                    if (Money >= 2500) {
+                        Money = Money - 2500;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(16)))) {
+                    if (Money >= 2000) {
+                        Money = Money - 2000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(17))) || (Selected.equals(items.get(18))) || (Selected.equals(items.get(19))) ||
+                        (Selected.equals(items.get(20))) || (Selected.equals(items.get(21))) || (Selected.equals(items.get(22))) ||
+                        (Selected.equals(items.get(23))) || (Selected.equals(items.get(24))) || (Selected.equals(items.get(25))) ||
+                        (Selected.equals(items.get(26))) || (Selected.equals(items.get(27))) || (Selected.equals(items.get(28))) ||
+                        (Selected.equals(items.get(29))) || (Selected.equals(items.get(30))) || (Selected.equals(items.get(31))) ||
+                        (Selected.equals(items.get(32))) || (Selected.equals(items.get(33))) || (Selected.equals(items.get(34))) ||
+                        (Selected.equals(items.get(35)))) {
+                    if (Money >= 10000) {
+                        Money = Money - 10000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                }
+                UpdateQuery(ID, Money);
+                PL.ShowBoard(player);
+            }
+            if (Clicked.equals(vault_block4)) {
+                Player player = (Player) e.getWhoClicked();
+                Connect_DB connect = new Connect_DB();
+                PlayerLevel PL = new PlayerLevel();
+                String ID = player.getName();
+                GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
+                int Money = (int) GetUserInfo.get(7);
+                ItemStack Selected = e.getCurrentItem();
+
+                if ((Selected.equals(items.get(0))) || (Selected.equals(items.get(1))) || (Selected.equals(items.get(2))) ||
+                        (Selected.equals(items.get(3))) || (Selected.equals(items.get(4))) || (Selected.equals(items.get(5))) ||
+                        (Selected.equals(items.get(6))) || (Selected.equals(items.get(7))) || (Selected.equals(items.get(8))) ||
+                        (Selected.equals(items.get(9))) || (Selected.equals(items.get(10))) || (Selected.equals(items.get(11))) ||
+                        (Selected.equals(items.get(12))) || (Selected.equals(items.get(13))) || (Selected.equals(items.get(14))) ||
+                        (Selected.equals(items.get(15)))) {
+                    if (Money >= 500) {
+                        Money = Money - 500;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if ((Selected.equals(items.get(17))) || (Selected.equals(items.get(18))) || (Selected.equals(items.get(19))) ||
+                        (Selected.equals(items.get(20))) || (Selected.equals(items.get(21))) || (Selected.equals(items.get(22))) ||
+                        (Selected.equals(items.get(23))) || (Selected.equals(items.get(24))) || (Selected.equals(items.get(25))) ||
+                        (Selected.equals(items.get(26))) || (Selected.equals(items.get(27))) || (Selected.equals(items.get(28))) ||
+                        (Selected.equals(items.get(29))) || (Selected.equals(items.get(30))) || (Selected.equals(items.get(31))) ||
+                        (Selected.equals(items.get(16)))) {
+                    if (Money >= 2000) {
+                        Money = Money - 2000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                }
+                UpdateQuery(ID, Money);
+                PL.ShowBoard(player);
+            }
+            if (Clicked.equals(vault_weapons)) {
+                Player player = (Player) e.getWhoClicked();
+                Connect_DB connect = new Connect_DB();
+                PlayerLevel PL = new PlayerLevel();
+                String ID = player.getName();
+                GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
+                int Money = (int) GetUserInfo.get(7);
+                ItemStack Selected = e.getCurrentItem();
+                if (Selected.equals(items.get(0))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int RandInt_2 = rand.nextInt(100);
+                        int RandInt_3 = rand.nextInt(100);
+                        int RandInt_4 = rand.nextInt(100);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                            player.setHealth(1);
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 99) {
+                            Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 10);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 == 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 25);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 25);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 25);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 25);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(1))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int RandInt_2 = rand.nextInt(100);
+                        int RandInt_3 = rand.nextInt(100);
+                        int RandInt_4 = rand.nextInt(100);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                            player.setHealth(1);
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 99) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 10);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 == 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 25);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 100);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 25);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 25);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(2))) {
+                    if (Money >= 200000) {
+                        Money = Money - 200000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int RandInt_2 = rand.nextInt(100);
+                        int RandInt_3 = rand.nextInt(100);
+                        int RandInt_4 = rand.nextInt(100);
+                        int RandInt_5 = rand.nextInt(100);
+                        int RandInt_6 = rand.nextInt(100);
+                        int RandInt_7 = rand.nextInt(100);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                            player.setHealth(1);
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
+                                        if (RandInt_5 % 2 == 0) {
+                                            Selected.addUnsafeEnchantment(Enchantment.PIERCING, 2);
+                                            if (RandInt_6 % 2 == 0) {
+                                                Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 2);
+                                                if (RandInt_7 % 2 == 0) {
+                                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 2);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 4);
+                                        if (RandInt_5 % 2 == 0) {
+                                            Selected.addUnsafeEnchantment(Enchantment.PIERCING, 4);
+                                            if (RandInt_6 % 2 == 0) {
+                                                Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 4);
+                                                if (RandInt_7 % 2 == 0) {
+                                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 4);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 3);
+                                        if (RandInt_5 % 2 == 0) {
+                                            Selected.addUnsafeEnchantment(Enchantment.PIERCING, 3);
+                                            if (RandInt_6 % 2 == 0) {
+                                                Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 3);
+                                                if (RandInt_7 % 2 == 0) {
+                                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 3);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 1);
+                                        if (RandInt_5 % 2 == 0) {
+                                            Selected.addUnsafeEnchantment(Enchantment.PIERCING, 1);
+                                            if (RandInt_6 % 2 == 0) {
+                                                Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
+                                                if (RandInt_7 % 2 == 0) {
+                                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 99) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 10);
+                                        if (RandInt_5 % 2 == 0) {
+                                            Selected.addUnsafeEnchantment(Enchantment.PIERCING, 10);
+                                            if (RandInt_6 % 2 == 0) {
+                                                Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 10);
+                                                if (RandInt_7 % 2 == 0) {
+                                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 10);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 == 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 25);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 25);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 25);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 25);
+                                        if (RandInt_5 % 2 == 0) {
+                                            Selected.addUnsafeEnchantment(Enchantment.PIERCING, 25);
+                                            if (RandInt_6 % 2 == 0) {
+                                                Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 25);
+                                                if (RandInt_7 % 2 == 0) {
+                                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 25);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(3))) {
+                    if (Money >= 10000) {
+                        Money = Money - 10000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int i;
+                        for (i = 0; i < RandInt_1; i++) {
+                            player.getInventory().addItem(Selected);
+                        }
+                        player.sendMessage("화살" + Integer.toString(i) + "개가 지급되었습니다.");
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
                 } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(1))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
+
+                UpdateQuery(ID, Money);
+                PL.ShowBoard(player);
+            }
+            if (Clicked.equals(vault_arm)) {
+                Player player = (Player) e.getWhoClicked();
+                Connect_DB connect = new Connect_DB();
+                PlayerLevel PL = new PlayerLevel();
+                String ID = player.getName();
+                GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
+                int Money = (int) GetUserInfo.get(7);
+                ItemStack Selected = e.getCurrentItem();
+                if (Selected.equals(items.get(0))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(1))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(2))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(3))) {
+                    if (Money >= 1000) {
+                        Money = Money - 1000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(4))) {
+                    if (Money >= 10000) {
+                        Money = Money - 10000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(5))) {
+                    if (Money >= 10000) {
+                        Money = Money - 10000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(6))) {
+                    if (Money >= 10000) {
+                        Money = Money - 10000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(7))) {
+                    if (Money >= 10000) {
+                        Money = Money - 10000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(8))) {
+                    if (Money >= 50000) {
+                        Money = Money - 50000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(9))) {
+                    if (Money >= 50000) {
+                        Money = Money - 50000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(10))) {
+                    if (Money >= 50000) {
+                        Money = Money - 50000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(11))) {
+                    if (Money >= 50000) {
+                        Money = Money - 50000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(12))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int RandInt_2 = rand.nextInt(100);
+                        int RandInt_3 = rand.nextInt(100);
+                        int RandInt_4 = rand.nextInt(100);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage("꽝!");
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(13))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(99);
+                        int RandInt_2 = rand.nextInt(99);
+                        int RandInt_3 = rand.nextInt(99);
+                        int RandInt_4 = rand.nextInt(99);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage("꽝!");
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
+                                        Selected.addUnsafeEnchantment(Enchantment.THORNS, 10);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(14))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(99);
+                        int RandInt_2 = rand.nextInt(99);
+                        int RandInt_3 = rand.nextInt(99);
+                        int RandInt_4 = rand.nextInt(99);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage("꽝!");
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(15))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(99);
+                        int RandInt_2 = rand.nextInt(99);
+                        int RandInt_3 = rand.nextInt(99);
+                        int RandInt_4 = rand.nextInt(99);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage("꽝!");
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
                 } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(2))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
+                UpdateQuery(ID, Money);
+                PL.ShowBoard(player);
+            }
+            if (Clicked.equals(vault_utils)){
+                Player player = (Player) e.getWhoClicked();
+                Connect_DB connect = new Connect_DB();
+                PlayerLevel PL = new PlayerLevel();
+                String ID = player.getName();
+                GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
+                int Money = (int) GetUserInfo.get(7);
+                ItemStack Selected = e.getCurrentItem();
+                if (Selected.equals(items.get(0))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int RandInt_2 = rand.nextInt(100);
+                        int RandInt_3 = rand.nextInt(100);
+                        int RandInt_4 = rand.nextInt(100);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                            player.setHealth(1);
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 99) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 == 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 25);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 25);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 25);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 25);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(1))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int RandInt_2 = rand.nextInt(100);
+                        int RandInt_3 = rand.nextInt(100);
+                        int RandInt_4 = rand.nextInt(100);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                            player.setHealth(1);
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 99) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 == 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 25);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 25);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 25);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 25);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(2))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int RandInt_2 = rand.nextInt(100);
+                        int RandInt_3 = rand.nextInt(100);
+                        int RandInt_4 = rand.nextInt(100);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                            player.setHealth(1);
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 99) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 == 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 25);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 25);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 25);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 25);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(3))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        Random rand = new Random();
+                        int RandInt_1 = rand.nextInt(100);
+                        int RandInt_2 = rand.nextInt(100);
+                        int RandInt_3 = rand.nextInt(100);
+                        int RandInt_4 = rand.nextInt(100);
+                        if (RandInt_1 < 11) {
+                            player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                            player.setHealth(1);
+                        } else if (RandInt_1 > 10 && RandInt_1 < 31) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 2);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 2);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 2);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 2);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 30 && RandInt_1 < 41) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 4);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 4);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 4);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 40 && RandInt_1 < 51) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 3);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 3);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 3);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 50 && RandInt_1 < 95) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 1);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 > 94 && RandInt_1 <= 99) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 10);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 10);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+                                    }
+                                }
+                            }
+                        } else if (RandInt_1 == 100) {
+                            Selected.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 25);
+                            if (RandInt_2 % 2 == 0) {
+                                Selected.addUnsafeEnchantment(Enchantment.DIG_SPEED, 25);
+                                if (RandInt_3 % 2 == 0) {
+                                    Selected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 25);
+                                    if (RandInt_4 % 2 == 0) {
+                                        Selected.addUnsafeEnchantment(Enchantment.DURABILITY, 25);
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage("꽝!");
+                        }
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
                 } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(3))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(4))){
-                if(Money >= 10000){
-                    Money = Money - 10000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(5))){
-                if(Money >= 10000){
-                    Money = Money - 10000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(6))){
-                if(Money >= 10000){
-                    Money = Money - 10000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(7))){
-                if(Money >= 10000){
-                    Money = Money - 10000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(8))){
-                if(Money >= 50000){
-                    Money = Money - 50000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(9))){
-                if(Money >= 50000){
-                    Money = Money - 50000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(10))){
-                if(Money >= 50000){
-                    Money = Money - 50000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(11))){
-                if(Money >= 50000){
-                    Money = Money - 50000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(12))){
-                if(Money >= 100000){
-                    Money = Money - 100000;
-                    Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(100);
-                    int RandInt_2 = rand.nextInt(100);
-                    int RandInt_3 = rand.nextInt(100);
-                    int RandInt_4 = rand.nextInt(100);
-                    if(RandInt_1 < 11){
-                        player.sendMessage("꽝!");
-                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 2);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 4);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 3);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 1);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 94 && RandInt_1 <= 100){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 10);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.OXYGEN, 10);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
-                                }
-                            }
-                        }
-                    } else{
-                        player.sendMessage("꽝!");
-                    }
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(13))){
-                if(Money >= 100000){
-                    Money = Money - 100000;
-                    Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(99);
-                    int RandInt_2 = rand.nextInt(99);
-                    int RandInt_3 = rand.nextInt(99);
-                    int RandInt_4 = rand.nextInt(99);
-                    if(RandInt_1 < 11){
-                        player.sendMessage("꽝!");
-                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 2);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 4);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 3);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 1);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 94 && RandInt_1 <= 100){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 10);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 10);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
-                                    Selected.addUnsafeEnchantment(Enchantment.THORNS, 10);
-                                }
-                            }
-                        }
-                    } else{
-                        player.sendMessage("꽝!");
-                    }
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(14))){
-                if(Money >= 100000){
-                    Money = Money - 100000;
-                    Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(99);
-                    int RandInt_2 = rand.nextInt(99);
-                    int RandInt_3 = rand.nextInt(99);
-                    int RandInt_4 = rand.nextInt(99);
-                    if(RandInt_1 < 11){
-                        player.sendMessage("꽝!");
-                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 2);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 4);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 3);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 1);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 94 && RandInt_1 <= 100){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 10);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 10);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
-                                }
-                            }
-                        }
-                    } else{
-                        player.sendMessage("꽝!");
-                    }
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(15))){
-                if(Money >= 100000){
-                    Money = Money - 100000;
-                    Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(99);
-                    int RandInt_2 = rand.nextInt(99);
-                    int RandInt_3 = rand.nextInt(99);
-                    int RandInt_4 = rand.nextInt(99);
-                    if(RandInt_1 < 11){
-                        player.sendMessage("꽝!");
-                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 2);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 4);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 3);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 1);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-                                }
-                            }
-                        }
-                    } else if(RandInt_1 > 94 && RandInt_1 <= 100){
-                        Selected.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 10);
-                        if(RandInt_2%2 == 0){
-                            Selected.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 10);
-                            if(RandInt_3%2 == 0){
-                                Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 10);
-                                if(RandInt_4%2 == 0){
-                                    Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
-                                }
-                            }
-                        }
-                    } else{
-                        player.sendMessage("꽝!");
-                    }
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else e.setCancelled(true);
-            UpdateQuery(ID,Money);
-            PL.ShowBoard(player);
+            }
+            if (Clicked.equals(vault_spawn)){
+                Player player = (Player) e.getWhoClicked();
+                Connect_DB connect = new Connect_DB();
+                PlayerLevel PL = new PlayerLevel();
+                String ID = player.getName();
+                GetUserInfo = PlayerLogin.playerInfoMap.get(ID);
+                int Money = (int) GetUserInfo.get(7);
+                ItemStack Selected = e.getCurrentItem();
+                if (Selected.equals(items.get(0))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(1))) {
+                    if (Money >= 90000) {
+                        Money = Money - 90000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(2))) {
+                    if (Money >= 200000) {
+                        Money = Money - 200000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(3))) {
+                    if (Money >= 230000) {
+                        Money = Money - 230000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(4))) {
+                    if (Money >= 150000) {
+                        Money = Money - 150000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(5))) {
+                    if (Money >= 30000) {
+                        Money = Money - 30000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(6))) {
+                    if (Money >= 50000) {
+                        Money = Money - 50000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(7))) {
+                    if (Money >= 100000) {
+                        Money = Money - 100000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(8))) {
+                    if (Money >= 150000) {
+                        Money = Money - 150000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                } else if (Selected.equals(items.get(9))) {
+                    if (Money >= 30000) {
+                        Money = Money - 30000;
+                        player.getInventory().addItem(Selected);
+                        e.setCancelled(true);
+                    } else e.setCancelled(true);
+                }
+                UpdateQuery(ID, Money);
+                PL.ShowBoard(player);
+            }
+
         }
     }
 
