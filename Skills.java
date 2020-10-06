@@ -384,9 +384,27 @@ public class Skills implements Listener {
         if (e.getDamager() instanceof Trident) {
             Trident sn = (Trident)e.getDamager();
             if (sn.getShooter() instanceof Player) {
-                if(!isCool){
+                String ID = ((Player) sn.getShooter()).getName();
+                if(ID == null) return;
+                GetPlayerInfo = PlayerLogin.playerInfoMap.get(ID);
+                if((!isCool)&&(GetPlayerInfo.get(3).equals("hunter"))&&((int)GetPlayerInfo.get(1)>=30)){
                     Entity getHit = (Entity)e.getEntity();
-                    getHit.setFireTicks(1000);
+                    World world = getHit.getWorld();
+                    Location getHitLoc = getHit.getLocation();
+                    int x = getHitLoc.getBlockX();
+                    int y = getHitLoc.getBlockY();
+                    int z = getHitLoc.getBlockZ();
+                    for(int j =0; j < 3; j++){
+                        world.strikeLightning(new Location(world, x, y, z));
+                        world.strikeLightning(new Location(world, x+j, y, z));
+                        world.strikeLightning(new Location(world, x+j, y, z-j));
+                        world.strikeLightning(new Location(world, x+j, y, z+j));
+                        world.strikeLightning(new Location(world, x, y, z-j));
+                        world.strikeLightning(new Location(world, x, y, z+j));
+                        world.strikeLightning(new Location(world, x-j, y, z));
+                        world.strikeLightning(new Location(world, x-j, y, z+j));
+                        world.strikeLightning(new Location(world, x-j, y, z-j));
+                    }
                 }
             }
         }

@@ -117,7 +117,7 @@ public class PlayerLogin implements CommandExecutor, Listener {
 		if(isLoginList.contains(ID)){
 			isLoginList.remove(ID);
 		}
-		String GetExp = "UPDATE PLAYERINFO SET EXP = ?, LV = ?, MONEY = ? WHERE ID = ?";
+		String GetExp = "UPDATE PLAYERINFO SET LV = ?, EXP = ?, MONEY = ? WHERE ID = ?";
 		try {
 			PreparedStatement stmt = connect.connection.prepareStatement(GetExp);
 			stmt.setInt(1, (int)UpdateList.get(1));
