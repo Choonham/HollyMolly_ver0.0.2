@@ -24,7 +24,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Random;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
 public class Shop implements CommandExecutor, Listener {
     ArrayList<Object> GetUserInfo = new ArrayList<Object>();
     static public Inventory vault_block, vault_block2, vault_block3, vault_block4,
@@ -46,7 +46,7 @@ public class Shop implements CommandExecutor, Listener {
             Location Arc2Block = new Location(player.getWorld(), 2, 2, 2);
             Location Arc3Block = new Location(player.getWorld(), 3, 3, 3);
             Location Arc4Block = new Location(player.getWorld(), 4, 4, 4);
-            Location WeaponsBlock = new Location(player.getWorld(), 5, 5, 5);
+            Location WeaponsBlock = new Location(player.getWorld(), -188, 83, 132);
             Location ArmBlock = new Location(player.getWorld(), -188, 83, 131);
             Location FoodsBlock = new Location(player.getWorld(), 7, 7, 7);
             Location PotionBlock = new Location(player.getWorld(), 8, 8, 8);
@@ -192,37 +192,10 @@ public class Shop implements CommandExecutor, Listener {
             }
             if (clickedBlockLoc.equals(WeaponsBlock)){
                 vault_weapons = Bukkit.createInventory(player, 36, "Weapon_Shop");
-                //***********************아이템 인첸트****************************//
-                ItemStack BOW_LV1 = SetItem(items, 0, Material.BOW, "싸구려 활: 500");
-                ItemStack BOW_LV2 = SetItem(items, 1, Material.BOW, "무한한 싸구려 활: 5000");
-                BOW_LV2.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-                ItemStack BOW_LV3 = SetItem(items, 2, Material.BOW, "무한한 화염 싸구려 활: 10000");
-                BOW_LV3.addEnchantment(Enchantment.ARROW_FIRE, 1);
-                BOW_LV3.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-                ItemStack BOW_LV4 = SetItem(items, 3, Material.BOW, "무한한 화염 넉백 싸구려 활: 15000");
-                BOW_LV4.addEnchantment(Enchantment.ARROW_FIRE, 1);
-                BOW_LV4.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-                BOW_LV4.addEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
-                ItemStack Sword_LV1 = SetItem(items, 4, Material.DIAMOND_SWORD, "검: 1000");
-                Sword_LV1.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
-                ItemStack Sword_LV2 = SetItem(items, 5, Material.DIAMOND_SWORD, "다리검: 3000");
-                Sword_LV2.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-                ItemStack Sword_LV3 = SetItem(items, 6, Material.DIAMOND_SWORD, "파티초대검: 5000");
-                Sword_LV3.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
-                ItemStack Sword_LV4 = SetItem(items, 7, Material.DIAMOND_SWORD, "친구추가검: 7000");
-                Sword_LV4.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 7);
-                ItemStack Sword_LV5 = SetItem(items, 8, Material.DIAMOND_SWORD, "길드신청검: 9000");
-                Sword_LV5.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 9);
-                //***********************아이템 인첸트****************************//
-                vault_weapons.setItem(0, BOW_LV1);
-                vault_weapons.setItem(1, BOW_LV2);
-                vault_weapons.setItem(2, BOW_LV3);
-                vault_weapons.setItem(3, BOW_LV4);
-                vault_weapons.setItem(4, Sword_LV1);
-                vault_weapons.setItem(5, Sword_LV2);
-                vault_weapons.setItem(6, Sword_LV3);
-                vault_weapons.setItem(7, Sword_LV4);
-                vault_weapons.setItem(8, Sword_LV5);
+                vault_weapons.setItem(0, SetItem(items, 0, Material.DIAMOND_SWORD, "랜덤 인챈트 검: 100,000"));
+                vault_weapons.setItem(1, SetItem(items, 1, Material.BOW, "랜덤 인챈트 활: 100,000"));
+                vault_weapons.setItem(2, SetItem(items, 2, Material.CROSSBOW, "랜덤 인챈트 석궁: 200,000"));
+                vault_weapons.setItem(3, SetItem(items, 3, Material.ARROW, "랜덤 갯수 화살: 10,000"));
                 player.openInventory(vault_weapons);
             }
             if (clickedBlockLoc.equals(ArmBlock)) {
@@ -644,60 +617,324 @@ public class Shop implements CommandExecutor, Listener {
             int Money = (int)GetUserInfo.get(7);
             ItemStack Selected = e.getCurrentItem();
             if(Selected.equals(items.get(0))){
-                if(Money >= 500){
-                    Money = Money - 500;
+                if(Money >= 100000){
+                    Money = Money - 100000;
+                    Random rand = new Random();
+                    int RandInt_1 = rand.nextInt(100);
+                    int RandInt_2 = rand.nextInt(100);
+                    int RandInt_3 = rand.nextInt(100);
+                    int RandInt_4 = rand.nextInt(100);
+                    if(RandInt_1 < 11){
+                        player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                        player.setHealth(1);
+                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
+                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 2);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
+                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 4);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 4);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 4);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 4);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
+                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 3);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
+                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 1);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 1);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 94 && RandInt_1 <= 99){
+                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 10);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 10);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 10);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 10);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 == 100){
+                        Selected.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 25);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.KNOCKBACK, 25);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 25);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 25);
+                                }
+                            }
+                        }
+                    }else{
+                        player.sendMessage("꽝!");
+                    }
                     player.getInventory().addItem(Selected);
                     e.setCancelled(true);
                 } else e.setCancelled(true);
             } else if(Selected.equals(items.get(1))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
+                if(Money >= 100000){
+                    Money = Money - 100000;
+                    Random rand = new Random();
+                    int RandInt_1 = rand.nextInt(100);
+                    int RandInt_2 = rand.nextInt(100);
+                    int RandInt_3 = rand.nextInt(100);
+                    int RandInt_4 = rand.nextInt(100);
+                    if(RandInt_1 < 11){
+                        player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                        player.setHealth(1);
+                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 2);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 4);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 4);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 4);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 4);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 3);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 3);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 3);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 94 && RandInt_1 <= 99){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 10);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 10);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 10);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 10);
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 == 100){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 25);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 100);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 25);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 25);
+                                }
+                            }
+                        }
+                    }else{
+                        player.sendMessage("꽝!");
+                    }
                     player.getInventory().addItem(Selected);
                     e.setCancelled(true);
                 } else e.setCancelled(true);
             } else if(Selected.equals(items.get(2))){
-                if(Money >= 10000){
-                    Money = Money - 10000;
+                if(Money >= 200000){
+                    Money = Money - 200000;
+                    Random rand = new Random();
+                    int RandInt_1 = rand.nextInt(100);
+                    int RandInt_2 = rand.nextInt(100);
+                    int RandInt_3 = rand.nextInt(100);
+                    int RandInt_4 = rand.nextInt(100);
+                    int RandInt_5 = rand.nextInt(100);
+                    int RandInt_6 = rand.nextInt(100);
+                    int RandInt_7 = rand.nextInt(100);
+                    if(RandInt_1 < 11){
+                        player.sendMessage(ChatColor.RED + "꽝!! set HP = 1!!");
+                        player.setHealth(1);
+                    } else if(RandInt_1 > 10 && RandInt_1 < 31){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
+                                    if(RandInt_5%2 == 0){
+                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 2);
+                                        if(RandInt_6%2 == 0){
+                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 2);
+                                            if(RandInt_7%2 == 0){
+                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 2);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 30 && RandInt_1 < 41){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 4);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 4);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 4);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 4);
+                                    if(RandInt_5%2 == 0){
+                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 4);
+                                        if(RandInt_6%2 == 0){
+                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 4);
+                                            if(RandInt_7%2 == 0){
+                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 4);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 40 && RandInt_1 < 51){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 3);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 3);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 3);
+                                    if(RandInt_5%2 == 0){
+                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 3);
+                                        if(RandInt_6%2 == 0){
+                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 3);
+                                            if(RandInt_7%2 == 0){
+                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 3);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 50 && RandInt_1 < 95){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 1);
+                                    if(RandInt_5%2 == 0){
+                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 1);
+                                        if(RandInt_6%2 == 0){
+                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
+                                            if(RandInt_7%2 == 0){
+                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 > 94 && RandInt_1 <= 99){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 10);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 10);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 10);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 10);
+                                    if(RandInt_5%2 == 0){
+                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 10);
+                                        if(RandInt_6%2 == 0){
+                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 10);
+                                            if(RandInt_7%2 == 0){
+                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 10);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else if(RandInt_1 == 100){
+                        Selected.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 25);
+                        if(RandInt_2%2 == 0){
+                            Selected.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 25);
+                            if(RandInt_3%2 == 0){
+                                Selected.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 25);
+                                if(RandInt_4%2 == 0){
+                                    Selected.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 25);
+                                    if(RandInt_5%2 == 0){
+                                        Selected.addUnsafeEnchantment(Enchantment.PIERCING, 25);
+                                        if(RandInt_6%2 == 0){
+                                            Selected.addUnsafeEnchantment(Enchantment.MULTISHOT, 25);
+                                            if(RandInt_7%2 == 0){
+                                                Selected.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 25);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }else{
+                        player.sendMessage("꽝!");
+                    }
                     player.getInventory().addItem(Selected);
                     e.setCancelled(true);
                 } else e.setCancelled(true);
             } else if(Selected.equals(items.get(3))){
-                if(Money >= 15000){
-                    Money = Money - 15000;
-                    player.getInventory().addItem(Selected);
+                if(Money >= 10000){
+                    Money = Money - 10000;
+                    Random rand = new Random();
+                    int RandInt_1 = rand.nextInt(100);
+                    int i;
+                    for(i = 0; i < RandInt_1; i++){
+                        player.getInventory().addItem(Selected);
+                    }
+                    player.sendMessage("화살" + Integer.toString(i) + "개가 지급되었습니다.");
                     e.setCancelled(true);
                 } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(4))){
-                if(Money >= 1000){
-                    Money = Money - 1000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(5))){
-                if(Money >= 3000){
-                    Money = Money - 3000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(6))){
-                if(Money >= 5000){
-                    Money = Money - 5000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(7))){
-                if(Money >= 7000){
-                    Money = Money - 7000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            } else if(Selected.equals(items.get(8))){
-                if(Money >= 9000){
-                    Money = Money - 9000;
-                    player.getInventory().addItem(Selected);
-                    e.setCancelled(true);
-                } else e.setCancelled(true);
-            }
+            } else e.setCancelled(true);
 
             UpdateQuery(ID,Money);
             PL.ShowBoard(player);
@@ -786,10 +1023,10 @@ public class Shop implements CommandExecutor, Listener {
                 if(Money >= 100000){
                     Money = Money - 100000;
                     Random rand = new Random();
-                    int RandInt_1 = rand.nextInt(99);
-                    int RandInt_2 = rand.nextInt(99);
-                    int RandInt_3 = rand.nextInt(99);
-                    int RandInt_4 = rand.nextInt(99);
+                    int RandInt_1 = rand.nextInt(100);
+                    int RandInt_2 = rand.nextInt(100);
+                    int RandInt_3 = rand.nextInt(100);
+                    int RandInt_4 = rand.nextInt(100);
                     if(RandInt_1 < 11){
                         player.sendMessage("꽝!");
                     } else if(RandInt_1 > 10 && RandInt_1 < 31){
@@ -915,6 +1152,7 @@ public class Shop implements CommandExecutor, Listener {
                                 Selected.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 10);
                                 if(RandInt_4%2 == 0){
                                     Selected.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 10);
+                                    Selected.addUnsafeEnchantment(Enchantment.THORNS, 10);
                                 }
                             }
                         }

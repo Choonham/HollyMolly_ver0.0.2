@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
 public class NPC {
     private static List<EntityPlayer> NPC = new ArrayList<EntityPlayer>();
     public static void createNPC(Player player){

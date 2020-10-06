@@ -22,7 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
 public class PlayerLevel implements Listener {
 	static Player p;
 	PlayerLogin login = new PlayerLogin();

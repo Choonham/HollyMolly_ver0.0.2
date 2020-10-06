@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
 public class PlayerLogin implements CommandExecutor, Listener {
 	//public static boolean isLogin = false;
 	public PlayerLogin() {
@@ -83,7 +83,9 @@ public class PlayerLogin implements CommandExecutor, Listener {
 								player.sendMessage("회원 탈퇴(데이터 복구 불가능): /imout password password");
 								player.sendMessage("토지 구매(5개 한정): /myblocks 정수 <서있는 곳 기준으로 정사각형 생김(ex: 3 --> 7x7의 사각형 토지 매입)>");
 								player.sendMessage("소유 토지 확인: /check");
-								player.sendMessage("소유 토지 매입: /rm X2좌표");
+								player.sendMessage("소유 토지 매입: /rm X 첫번째 좌표");
+								player.sendMessage("현금 교환: /exchange toCash 10000원 단위");
+								player.sendMessage("계좌 이체: /exchange toAccount 금블록 개수");
 								Pr.onID = Pr.getProperty();
 								Levelboard.ShowBoard(player);
 							} else player.sendMessage("아이디, 비밀번호를 확인해주세요.");

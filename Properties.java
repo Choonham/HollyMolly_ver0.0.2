@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-//76, y, 30//105, y, -251 // -185, y, -238//-185, y, 131
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
 public class Properties implements Listener, CommandExecutor {
     Connect_DB connect = new Connect_DB();
     ArrayList<Integer> X1 = new ArrayList<Integer>();

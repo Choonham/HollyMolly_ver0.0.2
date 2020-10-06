@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Random;
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
 public class PlayerStuff implements Listener {
     public HashMap<Player, ItemStack[]> items = new HashMap<>();
 

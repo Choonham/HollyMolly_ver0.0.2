@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.09.29)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
 public class Skills implements Listener {
     PlayerLevel PL = new PlayerLevel();
     Connect_DB connect = new Connect_DB();
@@ -277,7 +277,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                hunterSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (1*1000));
+                hunterSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (15*1000));
                 p.launchProjectile(Trident.class);
                 isCool = false;
             }
