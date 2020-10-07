@@ -107,6 +107,12 @@ public class PlayerLogin implements CommandExecutor, Listener {
 			player.sendMessage("회원가입: /join password password class(Arc, predator, hunter)");
 			player.sendMessage("로그인: /login ID password");
 		}
+		if(Skills.TimeSleepMap.containsKey(player.getName())) {
+			if (Skills.TimeSleepMap.get(player.getName())) {
+				e.setCancelled(true);
+			}
+		}
+
 	}
 
 	@EventHandler

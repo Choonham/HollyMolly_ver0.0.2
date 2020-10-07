@@ -11,6 +11,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,7 +20,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.BlockProjectileSource;
 import org.bukkit.util.Vector;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,7 +49,11 @@ public class Skills implements Listener {
 
     HashMap<String, Long> hunterSkill4CoolTime = new HashMap<String, Long>();
     HashMap<String, Long> FlashSkill3CoolTime = new HashMap<String, Long>();
-    static boolean isCool = false;
+
+    static HashMap<String, Boolean> TimeSleepMap = new HashMap<>();
+    static HashMap<String, Integer> ToGetFree = new HashMap<>();
+    static boolean isCool_hunter30 = false;
+    static boolean isCool_Arc40 = false;
 
     @EventHandler
     public void PlayerGetRequirments(PlayerBedEnterEvent e){
@@ -59,6 +66,7 @@ public class Skills implements Listener {
         ItemStack requirment10 = new ItemStack(Material.COAL);
         ItemStack requirment20 = new ItemStack(Material.SUNFLOWER);
         ItemStack requirment30 = new ItemStack(Material.LILAC);
+        ItemStack requirment40 = new ItemStack(Material.BLUE_ORCHID);
         if(LV<10) return;
         if(LV>=10) {
             ItemMeta requirment10Meta = requirment10.getItemMeta();
@@ -82,6 +90,14 @@ public class Skills implements Listener {
             requirment30.setItemMeta(requirment30Meta);
             if(!inventory.contains(requirment30)){
                 inventory.addItem(requirment30);
+            }
+        }
+        if(LV>=40){
+            ItemMeta requirment40Meta = requirment40.getItemMeta();
+            requirment40Meta.setDisplayName("40랩 스킬");
+            requirment40.setItemMeta(requirment40Meta);
+            if(!inventory.contains(requirment40)){
+                inventory.addItem(requirment40);
             }
         }
 
@@ -119,11 +135,11 @@ public class Skills implements Listener {
                     }
                 }
                 ArcSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (5*1000));
-            Block b = p.getTargetBlock(null,10);
-            int x = b.getX();
-            int y = b.getY();
-            int z = b.getZ();
-            for(int i = 0; i < 4; i++){
+                Block b = p.getTargetBlock(null,10);
+                int x = b.getX();
+                int y = b.getY();
+                int z = b.getZ();
+                for(int i = 0; i < 4; i++){
                     for(int j = 0; j < 4; j++) {
                         Block w1 = currentWorld.getBlockAt(x - 2 + i, y+j, z - 2);
                         Block w2 = currentWorld.getBlockAt(x - 2 + i, y+j, z + 2);
@@ -159,7 +175,6 @@ public class Skills implements Listener {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,300,1));
             }
         }
-        //************각 직업별 10랩 스킬
 
         //************각 직업별 20랩 스킬
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
@@ -233,8 +248,8 @@ public class Skills implements Listener {
                 FlashSkill3CoolTime.clear();
             }
         }
-        //************각 직업별 20랩 스킬
 
+        //************각 직업별 30랩 스킬
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
                 && (p.getItemInHand().getType().equals(Material.LILAC))&& (p.getItemInHand().getItemMeta().getDisplayName().equals("30랩 스킬"))) {
             if(Class.equals("Arc")&& LV >= 30){
@@ -278,17 +293,72 @@ public class Skills implements Listener {
                     if(hunterSkill3CoolTime.get(p.getName())>System.currentTimeMillis()) {
                         long timeleft = (hunterSkill3CoolTime.get(p.getName()) - System.currentTimeMillis())/1000;
                         p.sendMessage("cooldown left: " + timeleft);
-                        isCool = true;
+                        isCool_hunter30 = true;
                         return;
                     }
                 }
                 hunterSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (15*1000));
                 p.launchProjectile(Trident.class);
-                isCool = false;
+                isCool_hunter30 = false;
             }
 
         }
 
+        //************각 직업별 40랩 스킬
+        if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
+                && (p.getItemInHand().getType().equals(Material.BLUE_ORCHID)) && (p.getItemInHand().getItemMeta().getDisplayName().equals("40랩 스킬"))) {
+            if(Class.equals("Arc")&& LV >= 40) {
+                if (ArcSkill4CoolTime.containsKey(p.getName())) {
+                    if (ArcSkill4CoolTime.get(p.getName()) > System.currentTimeMillis()) {
+                        long timeleft = (ArcSkill4CoolTime.get(p.getName()) - System.currentTimeMillis()) / 1000;
+                        p.sendMessage("cooldown left: " + timeleft);
+                        isCool_Arc40 = true;
+                        return;
+                    }
+                }
+                ArcSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (5 * 1000));
+                p.launchProjectile(Snowball.class);
+                isCool_Arc40 = false;
+            }
+            if(Class.equals("predator")&& LV >= 40) {
+                if (predatorSkill4CoolTime.containsKey(p.getName())) {
+                    if (predatorSkill4CoolTime.get(p.getName()) > System.currentTimeMillis()) {
+                        long timeleft = (predatorSkill4CoolTime.get(p.getName()) - System.currentTimeMillis()) / 1000;
+                        p.sendMessage("cooldown left: " + timeleft);
+                        return;
+                    }
+                }
+                predatorSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (5 * 1000));
+                Location playerLoc = p.getLocation();
+                List<Entity> entity = (List<Entity>) p.getWorld().getNearbyEntities(playerLoc, 20, 20, 20);
+                    for(Entity E: entity){
+                        //if(E.getName()!=p.getName()) {
+                            TimeSleepMap.put((String)E.getName(), true);
+                            ToGetFree.put((String)E.getName(), 0);
+                        //}
+                    }
+
+            }
+            if(Class.equals("hunter")&& LV >= 40) {
+                if (hunterSkill4CoolTime.containsKey(p.getName())) {
+                    if (hunterSkill4CoolTime.get(p.getName()) > System.currentTimeMillis()) {
+                        long timeleft = (hunterSkill4CoolTime.get(p.getName()) - System.currentTimeMillis()) / 1000;
+                        p.sendMessage("cooldown left: " + timeleft);
+                        return;
+                    }
+                }
+                hunterSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (5 * 1000));
+                Location playerLoc = p.getLocation();
+                List<Entity> entity = (List<Entity>) p.getWorld().getNearbyEntities(playerLoc, 20, 20, 20);
+                for(Entity E: entity){
+                    if(E.getName()!=p.getName()) {
+                        E.teleport(new Location(p.getWorld(), playerLoc.getBlockX(), playerLoc.getBlockY() + 30, playerLoc.getBlockZ()));
+                    }
+                }
+
+
+            }
+        }
             //************Cancel Action********//
         if ((action.equals(Action.RIGHT_CLICK_BLOCK)||(action.equals(Action.RIGHT_CLICK_AIR)))
                 && (p.getItemInHand().getType().equals(Material.SUNFLOWER))){
@@ -386,13 +456,13 @@ public class Skills implements Listener {
     @EventHandler
     public void ProjectileHit(EntityDamageByEntityEvent e){
         if (e.getDamager() instanceof Trident) {
-            Trident sn = (Trident)e.getDamager();
-            if (sn.getShooter() instanceof Player) {
-                Player p = (Player)sn.getShooter();
+            Trident tr = (Trident)e.getDamager();
+            if (tr.getShooter() instanceof Player) {
+                Player p = (Player)tr.getShooter();
                 String ID = p.getName();
                 if(ID == null) return;
                 GetPlayerInfo = PlayerLogin.playerInfoMap.get(ID);
-                if((!isCool)&&(GetPlayerInfo.get(3).equals("hunter"))&&((int)GetPlayerInfo.get(1)>=30)){
+                if((!isCool_hunter30)&&(GetPlayerInfo.get(3).equals("hunter"))&&((int)GetPlayerInfo.get(1)>=30)){
                     if((p.getItemInHand().getType().equals(Material.LILAC))&&(p.getItemInHand().getItemMeta().getDisplayName().equals("30랩 스킬"))){
                     Entity getHit = (Entity)e.getEntity();
                     World world = getHit.getWorld();
@@ -410,6 +480,43 @@ public class Skills implements Listener {
                         world.strikeLightning(new Location(world, x - j, y, z));
                         world.strikeLightning(new Location(world, x - j, y, z + j));
                         world.strikeLightning(new Location(world, x - j, y, z - j));
+                        }
+                    }
+                }
+            }
+        }
+        if (e.getDamager() instanceof Snowball) {
+            Snowball sn = (Snowball) e.getDamager();
+            if(sn.getShooter() instanceof Player){
+                Player p = (Player)sn.getShooter();
+                String ID = p.getName();
+                if(ID == null) return;
+                GetPlayerInfo = PlayerLogin.playerInfoMap.get(ID);
+                if((!isCool_Arc40)&&(GetPlayerInfo.get(3).equals("Arc"))&&((int)GetPlayerInfo.get(1)>=40)) {
+                    if ((p.getItemInHand().getType().equals(Material.BLUE_ORCHID)) && (p.getItemInHand().getItemMeta().getDisplayName().equals("40랩 스킬"))) {
+                        Entity getHit = (Entity)e.getEntity();
+                        World world = getHit.getWorld();
+                        Location getHitLoc = getHit.getLocation();
+                        int x = getHitLoc.getBlockX();
+                        int y = getHitLoc.getBlockY();
+                        int z = getHitLoc.getBlockZ();
+                        for(int i = 0; i < 4; i++){
+                            for(int j = 0; j < 4; j++) {
+                                Block w1 = world.getBlockAt(x - 1 + i, y+j, z - 1);
+                                Block w2 = world.getBlockAt(x - 1 + i, y+j, z + 1);
+                                Block w3 = world.getBlockAt(x - 1, y+j, z - 1 + i);
+                                Block w4 = world.getBlockAt(x + 1, y+j, z - 1 + i);
+                                Block w5 = world.getBlockAt(x, y+j, z);
+                                Block w6 = world.getBlockAt(x+j, y - 1, z);
+                                Block w7 = world.getBlockAt(x+j, y - 2, z);
+                                w1.setType(Material.COBWEB);
+                                w2.setType(Material.COBWEB);
+                                w3.setType(Material.COBWEB);
+                                w4.setType(Material.COBWEB);
+                                w5.setType(Material.COBWEB);
+                                w6.setType(Material.TNT);
+                                w7.setType(Material.REDSTONE_BLOCK);
+                            }
                         }
                     }
                 }
@@ -442,4 +549,16 @@ public class Skills implements Listener {
         return dir;
     }
         //************Flash********//
+    @EventHandler
+    public void getFree(PlayerSwapHandItemsEvent e){
+        if(ToGetFree.containsKey(e.getPlayer().getName())) {
+            int count = ToGetFree.get(e.getPlayer().getName());
+            count++;
+            ToGetFree.replace(e.getPlayer().getName(), count);
+            if (count >= 10) {
+                TimeSleepMap.remove(e.getPlayer().getName());
+                ToGetFree.remove(e.getPlayer().getName());
+            }
+        }
+    }
 }
