@@ -10,11 +10,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -33,26 +37,26 @@ public class Shop implements CommandExecutor, Listener {
     static public ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 
     @EventHandler
-    public void onClickBlock(PlayerInteractEvent e){
+    public void onClickBlock(PlayerInteractEntityEvent e){
         Player player = e.getPlayer();
-        Block clickedBlock = (Block) e.getClickedBlock();
-        if(clickedBlock!=null) {
-            Location blockLoc = clickedBlock.getLocation();
+        Entity clickedEntity = e.getRightClicked();
+        if(clickedEntity!=null) {
+            Location blockLoc = clickedEntity.getLocation();
             int blockX = blockLoc.getBlockX();
             int blockY = blockLoc.getBlockY();
             int blockZ = blockLoc.getBlockZ();
             Location clickedBlockLoc = new Location(player.getWorld(), blockX, blockY, blockZ);
-            Location Arc1Block = new Location(player.getWorld(), 1, 1, 1);
-            Location Arc2Block = new Location(player.getWorld(), 2, 2, 2);
-            Location Arc3Block = new Location(player.getWorld(), 3, 3, 3);
-            Location Arc4Block = new Location(player.getWorld(), 4, 4, 4);
-            Location WeaponsBlock = new Location(player.getWorld(), -188, 83, 132);
-            Location ArmBlock = new Location(player.getWorld(), -188, 83, 131);
-            Location SpawnerBlock = new Location(player.getWorld(), -188, 83, 133);
-            Location UtilsBlock = new Location(player.getWorld(), -188, 83, 134);
+            Location Arc1Block = new Location(player.getWorld(), -64, 70, -83);
+            Location Arc2Block = new Location(player.getWorld(), -65, 70, -83);
+            Location Arc3Block = new Location(player.getWorld(), -68, 70, -83);
+            Location Arc4Block = new Location(player.getWorld(), -69, 70, -83);
+            Location WeaponsBlock = new Location(player.getWorld(), -64, 70, -80);
+            Location ArmBlock = new Location(player.getWorld(), -65, 70, -80);
+            Location SpawnerBlock = new Location(player.getWorld(), -68, 70, -80);
+            Location UtilsBlock = new Location(player.getWorld(), -69, 70, -80);
 
 
-            if (clickedBlockLoc.equals(Arc1Block)) {
+            if (clickedBlockLoc.equals(Arc1Block)&&clickedEntity instanceof ItemFrame) {
                 vault_block = Bukkit.createInventory(player, 36, "Arc1");
                 vault_block.setItem(0, SetItem(items, 0, Material.BEDROCK, "기반암: 100000"));
                 vault_block.setItem(1, SetItem(items, 1, Material.GLASS, "유리: 3000"));
@@ -80,7 +84,7 @@ public class Shop implements CommandExecutor, Listener {
                 player.openInventory(vault_block);
                 //e.setCancelled(true);
             }
-            if (clickedBlockLoc.equals(Arc2Block)){
+            if (clickedBlockLoc.equals(Arc2Block)&&clickedEntity instanceof ItemFrame){
                 vault_block2 = Bukkit.createInventory(player, 36, "Arc2");
                 vault_block2.setItem(0, SetItem(items, 0, Material.BLACK_STAINED_GLASS, "검은색 유리: 5000"));
                 vault_block2.setItem(1, SetItem(items, 1, Material.BLUE_STAINED_GLASS, "파란색 유리: 5000"));
@@ -116,7 +120,7 @@ public class Shop implements CommandExecutor, Listener {
                 vault_block2.setItem(31, SetItem(items, 31, Material.YELLOW_STAINED_GLASS_PANE, "노란색 유리판: 1500"));
                 player.openInventory(vault_block2);
             }
-            if (clickedBlockLoc.equals(Arc3Block)){
+            if (clickedBlockLoc.equals(Arc3Block)&&clickedEntity instanceof ItemFrame){
                 vault_block3 = Bukkit.createInventory(player, 36, "Arc3");
                 vault_block3.setItem(0, SetItem(items, 0, Material.STONE_BRICKS, "돌: 500"));
                 vault_block3.setItem(1, SetItem(items, 1, Material.MOSSY_STONE_BRICKS, "이끼낀 돌: 500"));
@@ -155,7 +159,7 @@ public class Shop implements CommandExecutor, Listener {
                 vault_block3.setItem(34, SetItem(items, 34, Material.PURPLE_GLAZED_TERRACOTTA, "PURPLE_GLAZED_TERRACOTTA: 10000"));
                 vault_block3.setItem(35, SetItem(items, 35, Material.RED_GLAZED_TERRACOTTA, "RED_GLAZED_TERRACOTTA: 10000"));
                 player.openInventory(vault_block3);}
-            if (clickedBlockLoc.equals(Arc4Block)){
+            if (clickedBlockLoc.equals(Arc4Block)&&clickedEntity instanceof ItemFrame){
                 vault_block4 = Bukkit.createInventory(player, 36, "Arc4");
                 vault_block4.setItem(0, SetItem(items, 0, Material.CYAN_CARPET, "CYAN_CARPET: 500"));
                 vault_block4.setItem(1, SetItem(items, 1, Material.BLACK_CARPET, "BLACK_CARPET: 500"));
@@ -191,7 +195,7 @@ public class Shop implements CommandExecutor, Listener {
                 vault_block4.setItem(31, SetItem(items, 31, Material.YELLOW_CONCRETE_POWDER, "YELLOW_CONCRETE_POWDER: 2000"));
                 player.openInventory(vault_block4);
             }
-            if (clickedBlockLoc.equals(WeaponsBlock)){
+            if (clickedBlockLoc.equals(WeaponsBlock)&&clickedEntity instanceof ItemFrame){
                 vault_weapons = Bukkit.createInventory(player, 36, "Weapon_Shop");
                 vault_weapons.setItem(0, SetItem(items, 0, Material.DIAMOND_SWORD, "랜덤 인챈트 검: 100,000"));
                 vault_weapons.setItem(1, SetItem(items, 1, Material.BOW, "랜덤 인챈트 활: 100,000"));
@@ -199,7 +203,7 @@ public class Shop implements CommandExecutor, Listener {
                 vault_weapons.setItem(3, SetItem(items, 3, Material.ARROW, "랜덤 갯수 화살: 10,000"));
                 player.openInventory(vault_weapons);
             }
-            if (clickedBlockLoc.equals(ArmBlock)) {
+            if (clickedBlockLoc.equals(ArmBlock)&&clickedEntity instanceof ItemFrame) {
                     vault_arm = Bukkit.createInventory(player, 36, "Arm");
                     vault_arm.setItem(0, SetItem(items, 0, Material.LEATHER_HELMET, "가죽 뚝빼기: 1,000"));
                     vault_arm.setItem(1, SetItem(items, 1, Material.LEATHER_CHESTPLATE, "가죽 갑빠: 1,000"));
@@ -220,7 +224,7 @@ public class Shop implements CommandExecutor, Listener {
                     player.openInventory(vault_arm);
                 //e.setCancelled(true);
             }
-            if (clickedBlockLoc.equals(UtilsBlock)){
+            if (clickedBlockLoc.equals(UtilsBlock)&&clickedEntity instanceof ItemFrame){
                 vault_utils = Bukkit.createInventory(player, 36, "Utils_Shop");
                 vault_utils.setItem(0, SetItem(items, 0, Material.DIAMOND_PICKAXE, "랜덤 인챈트 곡괭이: 100,000"));
                 vault_utils.setItem(1, SetItem(items, 1, Material.DIAMOND_AXE, "랜덤 인챈트 도끼: 100,000"));
@@ -228,7 +232,7 @@ public class Shop implements CommandExecutor, Listener {
                 vault_utils.setItem(3, SetItem(items, 3, Material.DIAMOND_SHOVEL, "랜덤 인챈트 삽: 100,000"));
                 player.openInventory(vault_utils);
             }
-            if (clickedBlockLoc.equals(SpawnerBlock)){
+            if (clickedBlockLoc.equals(SpawnerBlock)&&clickedEntity instanceof ItemFrame){
                 vault_spawn = Bukkit.createInventory(player, 36, "Spawner");
                 vault_spawn.setItem(0, SetItem(items, 0, Material.BLAZE_SPAWN_EGG, "블레이즈 스폰 알: 100,000"));
                 vault_spawn.setItem(1, SetItem(items, 1, Material.CAVE_SPIDER_SPAWN_EGG, "동굴 거미 스폰 알: 90,000"));

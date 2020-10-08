@@ -22,6 +22,7 @@ public class Main extends JavaPlugin{
 		getCommand("myblocks").setExecutor(new Properties());
 		getCommand("check").setExecutor((new Properties()));
 		getCommand("rm").setExecutor((new Properties()));
+		getCommand("InvenClear").setExecutor((new PlayerStuff()));
 		this.getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
 		this.getServer().getPluginManager().registerEvents(new PlayerStuff(), this);
 		this.getServer().getPluginManager().registerEvents(new Skills(), this);

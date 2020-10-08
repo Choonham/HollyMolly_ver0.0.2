@@ -2,6 +2,9 @@ package com.jun.hollymolly;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,8 +16,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.Random;
 //HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
-public class PlayerStuff implements Listener {
+public class PlayerStuff implements Listener, CommandExecutor {
     public HashMap<Player, ItemStack[]> items = new HashMap<>();
+
 
 
     @EventHandler
@@ -48,4 +52,14 @@ public class PlayerStuff implements Listener {
         e.getDrops().clear();
     }
 
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (sender instanceof Player){
+            Player player = (Player) sender;
+            if(label.equalsIgnoreCase("InvenClear")) {
+                player.getInventory().clear();
+            }
+        }
+        return false;
+    }
 }

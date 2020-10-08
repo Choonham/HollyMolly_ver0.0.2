@@ -121,7 +121,6 @@ public class Skills implements Listener {
                 return;
             }
         }
-
          */
         //************각 직업별 10랩 스킬
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
