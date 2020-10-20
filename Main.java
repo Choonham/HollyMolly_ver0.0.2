@@ -8,14 +8,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.20)
 public class Main extends JavaPlugin{
 
 	@Override
 	public void onEnable() {
 		System.out.println("HOLLY MOLLY ONLINE: Activated");
 		this.getServer().getPluginManager().registerEvents(new PlayerLevel(), this);
-		getCommand("join").setExecutor(new PlayerJoin());
+		//getCommand("join").setExecutor(new PlayerJoin());
 		getCommand("login").setExecutor(new PlayerLogin());
 		getCommand("ImOut").setExecutor(new PlayerWithdraw());
 		getCommand("exchange").setExecutor(new Shop());

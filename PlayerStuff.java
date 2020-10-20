@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Random;
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.20)
 public class PlayerStuff implements Listener, CommandExecutor {
     public HashMap<Player, ItemStack[]> items = new HashMap<>();
 

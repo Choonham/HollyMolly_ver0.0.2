@@ -22,7 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.*;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.20)
 public class PlayerLevel implements Listener {
 	static Player p;
 	PlayerLogin login = new PlayerLogin();
@@ -87,8 +87,8 @@ public class PlayerLevel implements Listener {
 			KilledMoney = (int)FloatMoney2;
 		}
 
-		if(KillerEXP >= (int) (KillerLV*(500)*(KillerLV*0.1))) {
-			int OverFlowExp = KillerEXP - (int) (KillerLV*(1000)*(KillerLV*0.75));
+		if(KillerEXP >= (int) (KillerLV*(500)*(KillerLV*KillerLV*0.5))) {
+			int OverFlowExp = KillerEXP - (int) (KillerLV*(500)*(KillerLV*KillerLV*0.5));
 			KillerLV++;
 			KillerEXP = OverFlowExp;
 			KillerMoney = KillerMoney + 100000;
@@ -138,7 +138,7 @@ public class PlayerLevel implements Listener {
 				Material.GREEN_CONCRETE, Material.LIGHT_BLUE_CONCRETE, Material.LIGHT_GRAY_CONCRETE, Material.LIME_CONCRETE, Material.MAGENTA_CONCRETE,
 				Material.ORANGE_CONCRETE, Material.PINK_CONCRETE, Material.PURPLE_CONCRETE, Material.RED_CONCRETE, Material.WHITE_CONCRETE,
 				Material.YELLOW_CONCRETE, Material.PURPUR_BLOCK, Material.PURPUR_PILLAR, Material.PURPUR_SLAB, Material.PURPUR_STAIRS};
-		Material[] Give150List = {Material.DIAMOND_BLOCK, Material.TNT, Material.OBSIDIAN, Material.EMERALD_BLOCK, Material.QUARTZ_BLOCK,
+		Material[] Give150List = {Material.DIAMOND_BLOCK, Material.OBSIDIAN, Material.EMERALD_BLOCK, Material.QUARTZ_BLOCK,
 				Material.PRISMARINE, Material.PRISMARINE_BRICKS, Material.TERRACOTTA, Material.BLACK_GLAZED_TERRACOTTA, Material.BLACK_TERRACOTTA,
 				Material.BLUE_GLAZED_TERRACOTTA, Material.BLUE_TERRACOTTA, Material.BROWN_GLAZED_TERRACOTTA, Material.BROWN_TERRACOTTA, Material.CYAN_GLAZED_TERRACOTTA,
 				Material.CYAN_TERRACOTTA, Material.GRAY_GLAZED_TERRACOTTA, Material.GRAY_TERRACOTTA, Material.GREEN_GLAZED_TERRACOTTA,
@@ -163,31 +163,31 @@ public class PlayerLevel implements Listener {
 		MONEY = (int) GetUserInfo.get(7);
 		Block block = e.getBlock();
 		Material getMat = block.getType();
-
+		int randInt = rand.nextInt(20);
 		boolean hasGive15s = Give50s.stream().anyMatch(s ->  s == getMat);
 		boolean hasGive30s = Give10s.stream().anyMatch(s ->  s == getMat);
 		boolean hasGive50s = Give150s.stream().anyMatch(s ->  s == getMat);
 		if(isHome) {
 			if (hasGive15s) {
-				if(Class.equals("Arc")) EXP = EXP + 500000;
-				else EXP = EXP + 500000;
-				MONEY = MONEY + 700;
+				if(Class.equals("Arc")) EXP = EXP + (50 * LV * 2);
+				else EXP = EXP + 50;
+				MONEY = MONEY + (700*randInt);
 			} else if(hasGive30s) {
-				if(Class.equals("Arc")) EXP = EXP + 200;
+				if(Class.equals("Arc")) EXP = EXP + (100 * LV * 2);
 				else EXP = EXP + 100;
-				MONEY = MONEY + 1000;
+				MONEY = MONEY + (1000*randInt);
 			} else if(hasGive50s) {
-				if(Class.equals("Arc")) EXP = EXP + 300;
+				if(Class.equals("Arc")) EXP = EXP + (150 * LV * 2);
 				else EXP = EXP + 150;
-				MONEY = MONEY + 1500;
+				MONEY = MONEY + (1500*randInt);
 			} else {
-				if(Class.equals("Arc")) EXP = EXP + 50;
-				else EXP = EXP + 25;
-				MONEY = MONEY + 500;
+				if(Class.equals("Arc")) EXP = EXP + (50 * LV * 2);
+				else EXP = EXP + (25*LV);
+				MONEY = MONEY + (500*randInt);
 			}
 		}
 		
-		if(EXP >= (LV*(1000)*(LV*0.1))) {
+		if(EXP >= (LV*(1000)*(LV*LV*0.5))) {
 			LV++;
 			EXP = 0;
 			MONEY = MONEY + 100000;
@@ -230,7 +230,7 @@ public class PlayerLevel implements Listener {
 			LV = (int) GetUserInfo.get(1);
 			String Class = (String) GetUserInfo.get(3);
 			MONEY = (int) GetUserInfo.get(7);
-			int randInt = rand.nextInt(40);
+			int randInt = rand.nextInt(20);
 
 			if (entity.getType() == EntityType.ZOMBIE) {
 				if (Class.equals("hunter")) EXP = EXP + (125*LV*2);
@@ -264,7 +264,7 @@ public class PlayerLevel implements Listener {
 				if (Class.equals("hunter")) EXP = EXP + (378*LV*2);
 				else EXP = EXP + (378*LV);
 				MONEY = MONEY + (429*randInt);
-			} else if (entity.getType() == EntityType.PIG_ZOMBIE) {
+			} else if (entity.getType() == EntityType.ZOMBIFIED_PIGLIN) {
 				if (Class.equals("hunter")) EXP = EXP + (289*LV*2);
 				else EXP = EXP + (289*LV);
 				MONEY = MONEY + (301*randInt);
@@ -302,7 +302,7 @@ public class PlayerLevel implements Listener {
 				MONEY = MONEY + 1000;
 			}
 
-			if (EXP >= (LV * (1000) * (LV * 0.1))) {
+			if (EXP >= (LV * (1000) * (LV * LV * 0.5))) {
 				LV++;
 				EXP = 0;
 				MONEY = MONEY + 100000;

@@ -10,10 +10,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
-public class PlayerJoin implements CommandExecutor, Listener {
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.20)
+
+public class PlayerJoin implements Listener {
 	public int LV = 1;
-	public int EXP = 0; 
+	public int EXP = 0;
+	/*
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
@@ -40,6 +42,7 @@ public class PlayerJoin implements CommandExecutor, Listener {
 		}
 		return true;
 	}
+	*/
 	@EventHandler
 	public void OnJoin(PlayerJoinEvent e){
 		if(NPC.getNPCs() == null) return;

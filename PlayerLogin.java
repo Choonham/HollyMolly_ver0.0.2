@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.20)
 public class PlayerLogin implements CommandExecutor, Listener {
 	//public static boolean isLogin = false;
 	public PlayerLogin() {

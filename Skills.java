@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.20)
 public class Skills implements Listener {
     PlayerLevel PL = new PlayerLevel();
     Connect_DB connect = new Connect_DB();
@@ -67,13 +67,20 @@ public class Skills implements Listener {
         ItemStack requirment20 = new ItemStack(Material.SUNFLOWER);
         ItemStack requirment30 = new ItemStack(Material.LILAC);
         ItemStack requirment40 = new ItemStack(Material.BLUE_ORCHID);
+        ItemStack requirmentFlash = new ItemStack(Material.GOLDEN_CARROT);
         if(LV<10) return;
         if(LV>=10) {
+            ItemMeta requirmentFlashMeta = requirmentFlash.getItemMeta();
+            requirmentFlashMeta.setDisplayName("점멸");
+            requirmentFlash.setItemMeta(requirmentFlashMeta);
             ItemMeta requirment10Meta = requirment10.getItemMeta();
             requirment10Meta.setDisplayName("10랩 스킬");
             requirment10.setItemMeta(requirment10Meta);
             if(!inventory.contains(requirment10)){
                 inventory.addItem(requirment10);
+            }
+            if(!inventory.contains(requirmentFlash)){
+                inventory.addItem(requirmentFlash);
             }
         }
         if(LV>=20){
@@ -114,14 +121,12 @@ public class Skills implements Listener {
         GetPlayerInfo = PlayerLogin.playerInfoMap.get(ID);
         int LV = (int) GetPlayerInfo.get(1);
         String Class = (String) GetPlayerInfo.get(3);
-        /*
         if ((p.getLocation().getBlockX() < 105) && (p.getLocation().getBlockX() > -185)) {
             if ((p.getLocation().getBlockZ() < 131) && (p.getLocation().getBlockZ() > -251)) {
-                p.sendMessage(ChatColor.RED +"Public property에서는 스킬 사용이 불가능합니다.");
+                //p.sendMessage(ChatColor.RED +"Public property에서는 스킬 사용이 불가능합니다.");
                 return;
             }
         }
-         */
         //************각 직업별 10랩 스킬
         if ((action.equals(Action.LEFT_CLICK_BLOCK)||(action.equals(Action.LEFT_CLICK_AIR)))
                 && (p.getItemInHand().getType().equals(Material.COAL)) && (p.getItemInHand().getItemMeta().getDisplayName().equals("10랩 스킬"))){
@@ -133,21 +138,21 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                ArcSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (5*1000));
+                ArcSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (90*1000));
                 Block b = p.getTargetBlock(null,10);
                 int x = b.getX();
                 int y = b.getY();
                 int z = b.getZ();
-                for(int i = 0; i < 4; i++){
+                for(int i = 0; i < 5; i++){
                     for(int j = 0; j < 4; j++) {
                         Block w1 = currentWorld.getBlockAt(x - 2 + i, y+j, z - 2);
                         Block w2 = currentWorld.getBlockAt(x - 2 + i, y+j, z + 2);
                         Block w3 = currentWorld.getBlockAt(x - 2, y+j, z - 2 + i);
                         Block w4 = currentWorld.getBlockAt(x + 2, y+j, z - 2 + i);
-                        w1.setType(Material.IRON_BLOCK);
-                        w2.setType(Material.IRON_BLOCK);
-                        w3.setType(Material.IRON_BLOCK);
-                        w4.setType(Material.IRON_BLOCK);
+                        w1.setType(Material.IRON_BARS);
+                        w2.setType(Material.IRON_BARS);
+                        w3.setType(Material.IRON_BARS);
+                        w4.setType(Material.IRON_BARS);
                     }
                 }
             }
@@ -159,7 +164,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                hunterSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
+                hunterSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (45*1000));
                 e.getPlayer().launchProjectile(Fireball.class);
             }
             if(Class.equals("predator")&&LV > 9){
@@ -170,7 +175,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                predatorSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (20*1000));
+                predatorSkill1CoolTime.put(p.getName(), System.currentTimeMillis() + (60*1000));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,300,1));
             }
         }
@@ -186,7 +191,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                ArcSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
+                ArcSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (30*1000));
                 Location PlayerLoc = p.getLocation();
                 int x = PlayerLoc.getBlockX();
                 int y = PlayerLoc.getBlockY();
@@ -218,7 +223,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                hunterSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (15*1000));
+                hunterSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (30*1000));
                 int X = p.getLocation().getBlockX();
                 int Y = p.getLocation().getBlockY();
                 int Z = p.getLocation().getBlockZ();
@@ -240,9 +245,9 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                NPC.clearNPC(p);
-                predatorSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
-                NPC.createNPC(p);
+                NPC.RemoveNPC(p, p.getName());
+                predatorSkill2CoolTime.put(p.getName(), System.currentTimeMillis() + (90*1000));
+                NPC.createNPC(p, p.getName());
                 predatorSkill1CoolTime.clear();
                 FlashSkill3CoolTime.clear();
             }
@@ -259,7 +264,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                ArcSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (5*1000));
+                ArcSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (60*1000));
                 Block b = p.getTargetBlock(null,10);
                 int x = b.getX();
                 int y = b.getY();
@@ -278,7 +283,7 @@ public class Skills implements Listener {
                             return;
                         }
                     }
-                    predatorSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (10*1000));
+                    predatorSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (30*1000));
                 for(Player player: Bukkit.getOnlinePlayers()) {
                     int i = 1;
                     p.sendMessage(i + "번: " + player.getName() + ", 위치: X: " + player.getLocation().getBlockX()
@@ -296,7 +301,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                hunterSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (15*1000));
+                hunterSkill3CoolTime.put(p.getName(), System.currentTimeMillis() + (90*1000));
                 p.launchProjectile(Trident.class);
                 isCool_hunter30 = false;
             }
@@ -315,7 +320,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                ArcSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (5 * 1000));
+                ArcSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (120* 1000));
                 p.launchProjectile(Snowball.class);
                 isCool_Arc40 = false;
             }
@@ -327,14 +332,15 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                predatorSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (5 * 1000));
+                predatorSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (120* 1000));
                 Location playerLoc = p.getLocation();
                 List<Entity> entity = (List<Entity>) p.getWorld().getNearbyEntities(playerLoc, 20, 20, 20);
                     for(Entity E: entity){
-                        //if(E.getName()!=p.getName()) {
+                        if(E.getName()!=p.getName()) {
                             TimeSleepMap.put((String)E.getName(), true);
                             ToGetFree.put((String)E.getName(), 0);
-                        //}
+                            E.sendMessage("당신은 Predator에 의해 얼었습니다. F키(주 사용 핸드 변경)를 20번 눌러 원래 상태로 돌아갈 수 있습니다.");
+                        }
                     }
 
             }
@@ -346,7 +352,7 @@ public class Skills implements Listener {
                         return;
                     }
                 }
-                hunterSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (5 * 1000));
+                hunterSkill4CoolTime.put(p.getName(), System.currentTimeMillis() + (120 * 1000));
                 Location playerLoc = p.getLocation();
                 List<Entity> entity = (List<Entity>) p.getWorld().getNearbyEntities(playerLoc, 20, 20, 20);
                 for(Entity E: entity){
@@ -554,7 +560,7 @@ public class Skills implements Listener {
             int count = ToGetFree.get(e.getPlayer().getName());
             count++;
             ToGetFree.replace(e.getPlayer().getName(), count);
-            if (count >= 10) {
+            if (count >= 20) {
                 TimeSleepMap.remove(e.getPlayer().getName());
                 ToGetFree.remove(e.getPlayer().getName());
             }

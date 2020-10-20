@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.06)
+//HollyMollyPlugIn ver.0.0.2(latest release on 2020.10.20)
 public class Properties implements Listener, CommandExecutor {
     Connect_DB connect = new Connect_DB();
     ArrayList<Integer> X1 = new ArrayList<Integer>();
